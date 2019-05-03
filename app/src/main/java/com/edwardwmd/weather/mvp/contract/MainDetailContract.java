@@ -16,7 +16,7 @@ public interface MainDetailContract {
 	  interface View extends BaseView {
 
 
-		    void showTopPageWeather(TopWeather topWeather);
+		    void showDetailWeather(TopWeather topWeather);
 
 
 	  }
@@ -25,7 +25,7 @@ public interface MainDetailContract {
 	  interface Presenter extends IPresenter<View> {
 
 
-		    void initTopPageWeather();
+		    void initDetailWeather();
 
 
 	  }

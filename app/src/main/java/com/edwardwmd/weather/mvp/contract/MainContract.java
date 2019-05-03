@@ -4,6 +4,7 @@ import com.edwardwmd.weather.base.BasePresenter;
 import com.edwardwmd.weather.base.BaseView;
 import com.edwardwmd.weather.base.IPresenter;
 import com.edwardwmd.weather.bean.ChinaCityInfo;
+import com.edwardwmd.weather.bean.TopWeather;
 
 import java.util.List;
 
@@ -11,13 +12,13 @@ public interface MainContract {
 
 
 	  interface View extends BaseView {
-         void showAllCity(List<ChinaCityInfo>chinaCityInfos);
+		    void showTopPageWeather(TopWeather topWeather);
 
 	  }
 
 
 	  interface Presenter extends IPresenter<View> {
-          void showAllData();
+		    void initTopPageWeather();
 
 	  }
 

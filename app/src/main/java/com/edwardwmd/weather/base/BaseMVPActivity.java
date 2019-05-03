@@ -72,6 +72,7 @@ public abstract class BaseMVPActivity<P extends BasePresenter> extends BaseActiv
 	  }
 
 
+
 	  protected abstract void initInject();
 
 

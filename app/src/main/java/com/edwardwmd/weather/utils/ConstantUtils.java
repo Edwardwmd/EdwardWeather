@@ -1,6 +1,7 @@
 package com.edwardwmd.weather.utils;
 
 import com.edwardwmd.weather.EdWeatherApp;
+import com.edwardwmd.weather.ui.fragment.MainFragment;
 
 public class ConstantUtils {
 
@@ -22,7 +23,11 @@ public class ConstantUtils {
 	  public static final String APK_KEY = "15f1ad91592a4577b6efdb8acfa692b2";
 
 	  //数据库名
-	  public final static String DB_NAME="city.db";
+	  public final static String DB_NAME = "city.db";
 	  //数据库文件路径
 	  public static final String DB_PATH = "/data/data/" + EdWeatherApp.getAppContext().getPackageName() + "/databases/";
+
+	  public final static String MAIN_FRAGMENT_KEYS = MainFragment.class.getSimpleName();
+
+
 }

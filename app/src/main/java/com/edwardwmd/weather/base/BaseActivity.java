@@ -11,6 +11,9 @@ import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.edwardwmd.weather.weight.StatusBarHelper;
 
@@ -87,6 +90,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 				mUnbinder.unbind();
 		    this.mUnbinder = null;
 
+	  }
+
+	  public  void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
+		    FragmentTransaction transaction = fragmentManager.beginTransaction();
+		    transaction.add(frameId, fragment);
+		    transaction.commit();
 	  }
 
 
