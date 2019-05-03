@@ -2,6 +2,7 @@ package com.edwardwmd.weather.base;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
@@ -11,6 +12,9 @@ import com.edwardwmd.weather.bean.DaoSession;
 import com.edwardwmd.weather.di.component.DaggerFragmentComponent;
 import com.edwardwmd.weather.di.component.FragmentComponent;
 import com.edwardwmd.weather.di.module.FragmentModule;
+import com.edwardwmd.weather.utils.SnackbarUtil;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -55,6 +59,12 @@ public abstract class BaseMVPFragment< P extends BasePresenter> extends BaseFrag
 		    if (mPresenter != null)
 				mPresenter.detachView();
 		    mPresenter = null;
+	  }
+
+
+	  @Override
+	  public void showErrorMsg(String msg) {
+		    SnackbarUtil.show(((ViewGroup) Objects.requireNonNull(getActivity()).findViewById(android.R.id.content)).getChildAt(0), msg);
 	  }
 
 

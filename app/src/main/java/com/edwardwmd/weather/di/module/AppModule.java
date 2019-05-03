@@ -2,6 +2,7 @@ package com.edwardwmd.weather.di.module;
 
 
 import com.edwardwmd.weather.EdWeatherApp;
+import com.edwardwmd.weather.LocationManager;
 import com.edwardwmd.weather.mvp.model.data.DaoManager;
 import com.edwardwmd.weather.mvp.model.data.GreenDaoOptions;
 
@@ -34,6 +35,13 @@ public class AppModule {
 	  @Singleton
 	  GreenDaoOptions provideGreenDaoOptions() {
 		    return new GreenDaoOptions();
+	  }
+
+
+	  @Provides
+	  @Singleton
+	  LocationManager provideLocationManager() {
+		    return LocationManager.getInstance();
 	  }
 
 
