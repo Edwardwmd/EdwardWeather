@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">EdWeatherWeather</string>
+    <string name="luncher_text">Edward Weather</string>
+    <string name="navigation_drawer_open">打开</string>
+    <string name="navigation_drawer_close">关闭</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="author_mail">邮箱：1732141816wmd@gmail.com</string>
+    <string name="content_description_default">图片描述</string>
+    <string name="title_detail_module">天气详情</string>
+    <string name="title_forecast_module">预报天气</string>
+    <string name="separator">/</string>
+    <string name="title_index_module">生活指数</string>
+
+    <string name="temp_unit">°</string>
+    <string name="wind_unit">级</string>
+    <string name="cloud_wet_unit">%</string>
+    <string name="precipitation_unit">mm</string>
+    <string name="visibility_unit">km</string>
+    <string name="atmospheric_pressure_unit">hPa</string>
+    <string name="update_by_text">更新于</string>
+    <string name="_2019_edwardweather_all_rights_reserved">Copyright © EdwardWeather,all rights reserved</string>
+
+</resources>

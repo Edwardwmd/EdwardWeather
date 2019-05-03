@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IndicatorView">
+        <attr name="marker" format="reference" />
+        <attr name="indicatorValue" format="integer" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="intervalSize" format="dimension" />
+        <attr name="indicatorStrings" format="integer" />
+        <attr name="indicatorColors" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="WeatherTextView">
+        <attr name="weatherViewText" format="string|reference" />
+        <attr name="weatherViewTextSize" format="dimension" />
+        <attr name="weatherViewTextColor" format="color|reference" />
+        <attr name="weatherViewBackground" format="color|reference" />
+        <attr name="weatherViewLineColor" format="color|reference" />
+    </declare-styleable>
+</resources>

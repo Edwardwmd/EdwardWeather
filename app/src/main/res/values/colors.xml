@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00B2EE</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    //LOGO字体颜色
+    <color name="splashlogo_text_color">#1C86EE</color>
+    //添加城市按钮背景颜色
+    <color name="add_city_default_bgm_color">#363636</color>
+    <color name="add_city_select_bgm_color">#292929</color>
+    //添加城市按钮字体颜色
+    <color name="add_city_text_default_bgm_color">#FFFFFF</color>
+    <color name="add_city_text_select_bgm_color">#ADADAD</color>
+    <color name="textColorDarkerGray">
+        @android:color/darker_gray
+    </color>
+    <color name="default_background_color">#FFFFFF</color>
+    <color name="default_text_color">#696969</color>
+    <color name="default_line_color">#C0C0C0</color>
+    <color name="default_title_text_color">#333333</color>
+    <color name="default_title_line_color">#E6E6E6</color>
+</resources>
