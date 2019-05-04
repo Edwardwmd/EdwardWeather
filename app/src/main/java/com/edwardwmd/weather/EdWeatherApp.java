@@ -3,6 +3,7 @@ package com.edwardwmd.weather;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.edwardwmd.weather.mvp.model.data.DaoManager;
 import com.edwardwmd.weather.di.component.AppComponent;
@@ -61,6 +62,7 @@ public class EdWeatherApp extends Application {
 		    if (allActivities == null) {
 				allActivities = new HashSet<>();
 		    }
+		    Log.e("栈添加Activity-->", "当前移除的是---->" + act);
 		    allActivities.add(act);
 	  }
 
@@ -72,6 +74,7 @@ public class EdWeatherApp extends Application {
 	   */
 	  public void removeActivity(Activity act) {
 		    if (allActivities != null) {
+				Log.e("栈移除Activity-->", "当前移除的是---->" + act);
 				allActivities.remove(act);
 		    }
 	  }
@@ -84,6 +87,7 @@ public class EdWeatherApp extends Application {
 		    if (allActivities != null) {
 				synchronized (allActivities) {
 					  for (Activity act : allActivities) {
+						    Log.e("程序退出-->", "已退出" );
 						    act.finish();
 					  }
 				}

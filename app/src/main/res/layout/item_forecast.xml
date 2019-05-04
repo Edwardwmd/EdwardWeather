@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="4dp"
+    tools:ignore="RtlHardcoded">
+
+    <TextView
+        android:id="@+id/tv_week_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:textSize="12sp"
+        tools:text="周五" />
+
+
+    <ImageView
+        android:id="@+id/weather_icon_image_view"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/tv_week_text"
+        android:contentDescription="@string/content_description_default"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_weather_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@id/weather_icon_image_view"
+        android:gravity="center"
+        android:lines="1"
+        android:textColor="@color/textColorDarkerGray"
+        android:textSize="10sp"
+        tools:text="多云转晴" />
+
+    <TextView
+        android:id="@+id/tv_wind_dir_sc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="22dp"
+        android:layout_toRightOf="@+id/tv_weather_text"
+        android:lines="1"
+        android:text="东风/2级"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_min_temp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:lines="1"
+        android:textSize="10sp"
+        tools:text="13°" />
+
+    <TextView
+        android:id="@+id/separator_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/tv_min_temp_text"
+        android:gravity="center"
+        android:text="@string/separator"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_max_temp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/separator_text_view"
+        android:gravity="center"
+        android:lines="1"
+        android:textSize="10sp"
+        tools:text="19°" />
+
+</RelativeLayout>

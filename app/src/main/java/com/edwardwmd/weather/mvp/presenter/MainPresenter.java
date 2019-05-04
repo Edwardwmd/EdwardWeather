@@ -6,10 +6,9 @@ import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.LocationManager;
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BasePresenter;
-import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.TopWeather;
-import com.edwardwmd.weather.mvp.model.data.GreenDaoOptions;
 import com.edwardwmd.weather.mvp.contract.MainContract;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
 
 	  private LocationManager locationManager;
+	  private List<Weather> weathers;
 
 
 	  @Inject
@@ -52,7 +52,8 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 					  @Override
 					  public void onSuccess(List<Weather> list) {
 						    if (list != null && list.size() > 0) {
-								Weather weather = list.get(0);
+								weathers=list;
+								Weather weather=list.get(0);
 								addTopWeather(weather);
 								mView.hideLoading();
 						    } else {
@@ -118,6 +119,12 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 						    }
 					  }
 				});
+	  }
+
+
+	  @Override
+	  public List<Weather> getWeatherData() {
+		    return weathers;
 	  }
 
 

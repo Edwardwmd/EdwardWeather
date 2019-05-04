@@ -12,7 +12,7 @@ public class DateUtils {
           * @return mSystemDate
           */
          public static String getCurrentSystemDate() {
-                  String mSystemDate = "2019年1月1日 12:00:00";
+                  String mSystemDate;
                   SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd- HH:mm");
                   Date date = new Date(System.currentTimeMillis());
                   mSystemDate = simpleDateFormat.format(date);

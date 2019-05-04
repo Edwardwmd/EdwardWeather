@@ -2,7 +2,13 @@ package com.edwardwmd.weather.mvp.contract;
 
 import com.edwardwmd.weather.base.BaseView;
 import com.edwardwmd.weather.base.IPresenter;
-import com.edwardwmd.weather.bean.TopWeather;
+import com.edwardwmd.weather.bean.ForecastWeatherBean;
+import com.edwardwmd.weather.bean.LifeIdexBean;
+import com.edwardwmd.weather.bean.WeatherDetailBean;
+
+import java.util.List;
+
+import interfaces.heweather.com.interfacesmodule.bean.weather.Weather;
 
 public interface MainDetailContract {
 
@@ -16,7 +22,10 @@ public interface MainDetailContract {
 	  interface View extends BaseView {
 
 
-		    void showDetailWeather(TopWeather topWeather);
+		    void showDetailNowWeather(List<WeatherDetailBean> weathers);
+		    void showForecastWeather(List<ForecastWeatherBean> weathers);
+		    void showLifeIndex(List<LifeIdexBean> weathers);
+
 
 
 	  }
@@ -27,7 +36,7 @@ public interface MainDetailContract {
 
 		    void initDetailWeather();
 
-
+		    void startLoad();
 	  }
 
 

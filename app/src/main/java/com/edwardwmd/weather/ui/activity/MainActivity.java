@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,6 +18,7 @@ import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BaseMVPActivity;
 import com.edwardwmd.weather.bean.TopWeather;
 import com.edwardwmd.weather.mvp.contract.MainContract;
+import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainPresenter;
 import com.edwardwmd.weather.ui.fragment.DrawerFragment;
 import com.edwardwmd.weather.ui.fragment.MainFragment;
@@ -25,9 +27,15 @@ import com.edwardwmd.weather.utils.StringUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
+
+import static com.edwardwmd.weather.utils.ConstantUtils.START_REFRESH;
 
 
 public class MainActivity extends BaseMVPActivity<MainPresenter> implements MainContract.View {
@@ -114,24 +122,33 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 	  @Override
 	  protected void onDestroy() {
 		    super.onDestroy();
-		    EdWeatherApp.getInstance().exitApp();
+		    EdWeatherApp.getInstance().removeActivity(this);
 	  }
 
 
 	  @Override
 	  public void showTopPageWeather(TopWeather topWeather) {
+		    tvUpdateDate.setText(StringUtils.getString(R.string.update_by_text) + DateUtils.getCurrentSystemDate());
 		    imgWeatherShow.setImageResource(topWeather.getIconResource());
 		    tvWeatherInfo.setText(topWeather.getWeatherText());
 		    tvTemp.setText(topWeather.getTep_value());
 		    edCollapsingToolbar.setTitle(topWeather.getAddress());
+
 	  }
 
 
 	  @SuppressLint("SetTextI18n")
 	  @Override
 	  public void showLoading() {
-		    tvUpdateDate.setText(StringUtils.getString(R.string.update_by_text) + DateUtils.getCurrentSystemDate());
-		    edRefreshLayout.setOnRefreshListener(refreshLayout -> mPresenter.initTopPageWeather());
+
+		    edRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+				@Override
+				public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+					  mPresenter.initTopPageWeather();
+
+					  EventBus.getDefault().post(MainMessage.getInstance(mPresenter.getWeatherData()));
+				}
+		    });
 	  }
 
 

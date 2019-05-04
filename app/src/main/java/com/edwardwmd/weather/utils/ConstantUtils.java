@@ -28,6 +28,9 @@ public class ConstantUtils {
 	  public static final String DB_PATH = "/data/data/" + EdWeatherApp.getAppContext().getPackageName() + "/databases/";
 
 	  public final static String MAIN_FRAGMENT_KEYS = MainFragment.class.getSimpleName();
+	  public final static String START_REFRESH = "start_refresh_and_loading_data_for_main";
+
+
 
 
 }
