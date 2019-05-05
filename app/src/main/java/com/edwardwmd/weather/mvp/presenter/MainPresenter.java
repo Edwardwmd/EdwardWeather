@@ -1,13 +1,21 @@
 package com.edwardwmd.weather.mvp.presenter;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
+
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.LocationManager;
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BasePresenter;
 import com.edwardwmd.weather.bean.TopWeather;
 import com.edwardwmd.weather.mvp.contract.MainContract;
+import com.edwardwmd.weather.utils.ToastUtils;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -21,30 +29,51 @@ import interfaces.heweather.com.interfacesmodule.view.HeWeather;
 public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
 
 
-	  private LocationManager locationManager;
-	  private List<Weather> weathers;
-
+	  //声明AMapLocationClient类对象
+	  private AMapLocationClient mLocationClient = null;
 
 	  @Inject
-	  public MainPresenter(LocationManager locationManager) {
-		    this.locationManager = locationManager;
-		    locationManager.initLocation();
+	  public MainPresenter() {
 	  }
 
 
 	  @Override
 	  public void initTopPageWeather() {
+		    initLocation();
+
+	  }
+
+	  private AMapLocationListener mLocationListener = aMapLocation -> {
+
+		    if (aMapLocation.getErrorCode() == 0) {
+				Double lon = aMapLocation.getLongitude();
+				Double lat = aMapLocation.getLatitude();
+				initWeather(lon,lat);
+				mLocationClient.onDestroy();
+		    } else {
+				if (ContextCompat.checkSelfPermission(EdWeatherApp.getAppContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+					  != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(EdWeatherApp.getAppContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+					  != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(EdWeatherApp.getAppContext(), Manifest.permission.READ_PHONE_STATE)
+					  != PackageManager.PERMISSION_GRANTED) {
+					  ToastUtils.showToast_S("如需获取当前位置，请打开GPS定位权限！");
+
+				}
+				mLocationClient.onDestroy();
+		    }
+	  };
+
+
+	  private void initWeather(Double lon, Double lat) {
 		    if (!isAttachView()) {
 				return;
 		    }
 		    mView.showLoading();
 		    HeWeather.getWeather(EdWeatherApp.getAppContext(),
-				locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherDataListBeansListener() {
+				lon + "," + lat, new HeWeather.OnResultWeatherDataListBeansListener() {
 					  @Override
 					  public void onError(Throwable throwable) {
 						    mView.showErrorMsg(throwable.getMessage());
 						    mView.hideLoading();
-						    Log.e("----->", "------出错了！！！！" + throwable.getMessage());
 
 					  }
 
@@ -52,8 +81,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 					  @Override
 					  public void onSuccess(List<Weather> list) {
 						    if (list != null && list.size() > 0) {
-								weathers=list;
-								Weather weather=list.get(0);
+								Weather weather = list.get(0);
 								addTopWeather(weather);
 								mView.hideLoading();
 						    } else {
@@ -122,9 +150,23 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 	  }
 
 
-	  @Override
-	  public List<Weather> getWeatherData() {
-		    return weathers;
+	  private void initLocation() {
+		    //初始化定位
+		    mLocationClient = new AMapLocationClient(EdWeatherApp.getAppContext().getApplicationContext());
+		    //声明AMapLocationClientOption对象
+		    AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+		    //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+		    mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+		    //设置定位间隔,单位毫秒,默认为2000ms，最低15000ms。
+		    mLocationOption.setInterval(15000);
+		    //单位是毫秒，默认30000毫秒，建议超时时间不要低于25000毫秒。
+		    mLocationOption.setHttpTimeOut(25000);
+		    //给定位客户端对象设置定位参数
+		    mLocationClient.setLocationOption(mLocationOption);
+		    //启动定位
+		    mLocationClient.startLocation();
+		    //设置定位回调监听
+		    mLocationClient.setLocationListener(mLocationListener);
 	  }
 
 

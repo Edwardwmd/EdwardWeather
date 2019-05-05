@@ -29,13 +29,8 @@ import interfaces.heweather.com.interfacesmodule.bean.weather.lifestyle.Lifestyl
 import interfaces.heweather.com.interfacesmodule.bean.weather.lifestyle.LifestyleBase;
 import interfaces.heweather.com.interfacesmodule.bean.weather.now.Now;
 import interfaces.heweather.com.interfacesmodule.bean.weather.now.NowBase;
-import interfaces.heweather.com.interfacesmodule.view.HeConfig;
 import interfaces.heweather.com.interfacesmodule.view.HeWeather;
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Scheduler;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+
 
 
 public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> implements MainDetailContract.Presenter {
@@ -50,7 +45,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 	  @Inject
 	  public MainDetailPresenter(LocationManager locationManager) {
 		    this.locationManager = locationManager;
-		    this.locationManager.initLocation();
+
 	  }
 
 
@@ -59,52 +54,13 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 		    if (!isAttachView()) {
 				return;
 		    }
-
+		   locationManager.initLocation();
 		    Log.e("当前线程P0", "当前是否为主线程：" + ThreadUtils.isMainThrean());
-//		    HeWeather.getWeather(EdWeatherApp.getAppContext(), locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherDataListBeansListener() {
-//				@Override
-//				public void onError(Throwable throwable) {
-//					  mView.showErrorMsg(throwable.getMessage());
-//					  mView.hideLoading();
-//				}
-//
-//
-//				@Override
-//				public void onSuccess(List<Weather> l) {
-//
-//					  if (l != null && l.size() > 0) {
-//						    Log.e("当前线程P", "当前是否为主线程：" + ThreadUtils.isMainThrean());
-//
-//						    NowBase now = l.get(0).getNow();
-//						    List<ForecastBase> df = l.get(0).getDaily_forecast();
-//						    List<LifestyleBase> lifestyles = l.get(0).getLifestyle();
-//
-//						    //1.天气详情
-//						    addNowBaseData(detailBeans, now);
-//						    mView.showDetailNowWeather(detailBeans);
-//
-//						    //3.生活指数
-//						    if (lifestyles != null && lifestyles.size() > 0) {
-//								for (int j = 0; j < lifestyles.size(); j++) {
-//									  lifeIdexData(j, lifeIdexBeans, lifestyles);
-//								}
-//								mView.showLifeIndex(lifeIdexBeans);
-//						    }
-//
-//					  } else {
-//						    mView.showErrorMsg("无法获取当前数据，请检查你的网络是否正常！<_>");
-//					  }
-//
-//
-//				}
-//		    });
-//
-
 
 		    HeWeather.getWeatherNow(EdWeatherApp.getAppContext(), locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherNowBeanListener() {
 				@Override
 				public void onError(Throwable throwable) {
-
+					  mView.showErrorMsg(throwable.getMessage());
 				}
 
 
@@ -120,7 +76,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 		    HeWeather.getWeatherForecast(EdWeatherApp.getAppContext(), locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherForecastBeanListener() {
 				@Override
 				public void onError(Throwable throwable) {
-
+					  mView.showErrorMsg(throwable.getMessage());
 				}
 
 
@@ -141,7 +97,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 		    HeWeather.getWeatherLifeStyle(EdWeatherApp.getAppContext(), locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherLifeStyleBeanListener() {
 				@Override
 				public void onError(Throwable throwable) {
-
+//					  mView.showErrorMsg(throwable.getMessage());
 				}
 
 

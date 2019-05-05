@@ -2,7 +2,6 @@ package com.edwardwmd.weather.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,6 +81,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 	  @Override
 	  protected void initView() {
 		    super.initView();
+		    //参数占位
+		    init();
 		    //初始化Toolbar
 		    setSupportActionBar(toolbar);
 		    //设置DrawerLayout相关
@@ -95,8 +96,17 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 	  }
 
 
-	  private void initRefreshLayout() {
+	  @SuppressLint("SetTextI18n")
+	  private void init() {
+		    tvUpdateDate.setText(StringUtils.getString(R.string.update_by_text) + DateUtils.getCurrentSystemDate());
+		    imgWeatherShow.setImageResource(R.drawable.ic_999);
+		    tvWeatherInfo.setText(StringUtils.getString(R.string.text_Unknown));
+		    tvTemp.setText(StringUtils.getString(R.string.text_temp_Unknown_show));
+		    edCollapsingToolbar.setTitle(StringUtils.getString(R.string.text_Unknown));
+	  }
 
+
+	  private void initRefreshLayout() {
 		    ClassicsHeader header = new ClassicsHeader(this);
 		    header.setPrimaryColors(this.getResources().getColor(R.color.colorPrimary), Color.WHITE);
 		    edRefreshLayout.setRefreshHeader(header);
@@ -141,13 +151,10 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 	  @Override
 	  public void showLoading() {
 
-		    edRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-				@Override
-				public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-					  mPresenter.initTopPageWeather();
+		    edRefreshLayout.setOnRefreshListener(refreshLayout -> {
+				mPresenter.initTopPageWeather();
 
-					  EventBus.getDefault().post(MainMessage.getInstance(mPresenter.getWeatherData()));
-				}
+				EventBus.getDefault().post(MainMessage.getInstance(START_REFRESH));
 		    });
 	  }
 

@@ -10,7 +10,6 @@ import com.edwardwmd.weather.di.component.AppComponent;
 import com.edwardwmd.weather.di.component.DaggerAppComponent;
 import com.edwardwmd.weather.di.module.AppModule;
 
-//import com.edwardwmd.weather.di.component.AppComponent;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -2,6 +2,7 @@ package com.edwardwmd.weather.mvp.presenter;
 
 import android.Manifest;
 import android.content.Intent;
+import android.util.Log;
 
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.base.BasePresenter;
@@ -36,6 +37,7 @@ public class LauncherPresenter extends BasePresenter<LauncherContract.View> impl
 						    @Override
 						    public void accept(Boolean granted) {
 								if (granted) {
+
 									  EdWeatherApp.getAppContext().startService(new Intent(EdWeatherApp.getAppContext(), LocationService.class));
 									  JumpToMainByTimer();
 								} else {

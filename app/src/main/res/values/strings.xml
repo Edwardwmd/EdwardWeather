@@ -1,4 +1,5 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
     <string name="app_name">EdWeatherWeather</string>
     <string name="luncher_text">Edward Weather</string>
     <string name="navigation_drawer_open">打开</string>
@@ -21,5 +22,7 @@
     <string name="atmospheric_pressure_unit">hPa</string>
     <string name="update_by_text">更新于</string>
     <string name="_2019_edwardweather_all_rights_reserved">Copyright © EdwardWeather,all rights reserved</string>
+    <string name="text_Unknown">未知</string>
+    <string name="text_temp_Unknown_show">__</string>
 
 </resources>

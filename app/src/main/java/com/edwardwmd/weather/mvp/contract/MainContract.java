@@ -17,12 +17,14 @@ public interface MainContract {
 		    void showTopPageWeather(TopWeather topWeather);
 
 
+
 	  }
 
 
 	  interface Presenter extends IPresenter<View> {
 		    void initTopPageWeather();
-		    List<Weather> getWeatherData();
+
+
 	  }
 
 

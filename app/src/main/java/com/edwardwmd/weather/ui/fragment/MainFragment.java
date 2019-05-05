@@ -23,10 +23,8 @@ import com.edwardwmd.weather.bean.WeatherDetailBean;
 import com.edwardwmd.weather.mvp.contract.MainDetailContract;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainDetailPresenter;
-import com.edwardwmd.weather.utils.ConstantUtils;
 import com.edwardwmd.weather.utils.ThreadUtils;
 import com.edwardwmd.weather.weight.WeatherTextView;
-import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,6 +33,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.edwardwmd.weather.utils.ConstantUtils.START_REFRESH;
 
 
 public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implements MainDetailContract.View {
@@ -91,9 +91,9 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 		    dAdapter = new WeatherDetailAdapter(getActivity());
 		    fAdapter = new ForecastAdapter(getActivity());
 		    iAdapter = new LifeIndexAdapter(getActivity());
-//		    detailRecyclerView.setHasFixedSize(true);
-//		    forecastRecyclerView.setHasFixedSize(true);
-//		    lifeIndexRecyclerView.setHasFixedSize(true);
+		    detailRecyclerView.setHasFixedSize(true);
+		    forecastRecyclerView.setHasFixedSize(true);
+		    lifeIndexRecyclerView.setHasFixedSize(true);
 		    detailRecyclerView.setNestedScrollingEnabled(false);
 		    forecastRecyclerView.setNestedScrollingEnabled(false);
 		    lifeIndexRecyclerView.setNestedScrollingEnabled(false);
@@ -157,7 +157,6 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  @Override
 	  public void showForecastWeather(List<ForecastWeatherBean> forecastWeatherBeans) {
-//		    Log.e("获取未来天气预报数据:", "--------->数据刷新了!!!!");
 		    fAdapter.setAllDatas(forecastWeatherBeans);
 		    forecastRecyclerView.setAdapter(fAdapter);
 
@@ -166,7 +165,7 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  @Override
 	  public void showLifeIndex(List<LifeIdexBean> lifeIdexBeans) {
-		    Log.e("当前线程M","当前是否为主线程："+ ThreadUtils.isMainThrean());
+		    Log.e("当前线程M", "当前是否为主线程：" + ThreadUtils.isMainThrean());
 		    Log.e("获取生活指数数据:", "--------->数据刷新了!!!!");
 		    iAdapter.setAllLifeIndexData(lifeIdexBeans);
 		    lifeIndexRecyclerView.setAdapter(iAdapter);
@@ -181,12 +180,10 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 
 	  @Subscribe(threadMode = ThreadMode.MAIN)
-	  public void onGetMessage(MainMessage weather) {
-//		    if (START_REFRESH.equals(weather.weather)) {
-//				Log.e("刷新数据:", "--------->数据刷新了!!!!"+new Gson().toJson(weather.weathers));
-		    mPresenter.startLoad();
+	  public void onGetMessage(MainMessage mainMessage) {
+		    if (START_REFRESH.equals(mainMessage.message))
+				mPresenter.startLoad();
 
-//		    }
 	  }
 
 

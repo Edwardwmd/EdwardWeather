@@ -24,6 +24,7 @@ public class LocationService extends Service {
 	  //声明定位回调监听器
 	  public AMapLocationListener mLocationListener = aMapLocation -> {
 		    if (aMapLocation.getErrorCode() == 0) {
+
 				ConstantUtils.NOW_LON = aMapLocation.getLongitude();
 				ConstantUtils.NOW_LAT = aMapLocation.getLatitude();
 				Log.i(TAG, "now location: " + ConstantUtils.NOW_LON + "," + ConstantUtils.NOW_LAT);
@@ -44,7 +45,7 @@ public class LocationService extends Service {
 	  public void onCreate() {
 
 		    super.onCreate();
-
+		    Log.e("定位服伍","服务开启");
 		    //初始化定位
 		    mLocationClient = new AMapLocationClient(getApplicationContext());
 		    //声明AMapLocationClientOption对象
@@ -60,6 +61,7 @@ public class LocationService extends Service {
 		    mLocationClient.setLocationOption(mLocationOption);
 		    //启动定位
 		    mLocationClient.startLocation();
+
 	  }
 
 
