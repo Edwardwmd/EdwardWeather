@@ -13,6 +13,7 @@
     <string name="title_forecast_module">预报天气</string>
     <string name="separator">/</string>
     <string name="title_index_module">生活指数</string>
+    <string name="title_sunrisesunset_module">日出日落</string>
 
     <string name="temp_unit">°</string>
     <string name="wind_unit">级</string>

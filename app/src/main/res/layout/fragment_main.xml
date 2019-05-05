@@ -81,7 +81,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_life_index"
+            android:id="@+id/cv_sunrisesunset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -91,6 +91,71 @@
             app:cardElevation="1dp"
             app:contentPadding="8dp"
             app:layout_constraintTop_toBottomOf="@+id/cv_forecast_weather">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_sun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
+
+                <com.edwardwmd.weather.weight.WeatherTextView
+                    android:id="@+id/sunrisesunset_tittle"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    app:layout_constraintLeft_toLeftOf="@id/cl_sun"
+                    app:layout_constraintTop_toTopOf="@id/cl_sun"
+                    app:weatherViewText="@string/title_sunrisesunset_module"
+                    app:weatherViewTextSize="14sp" />
+
+                <com.edwardwmd.weather.weight.SunriseSunsetView.SunriseSunsetView
+                    app:layout_constraintTop_toBottomOf="@id/sunrisesunset_tittle"
+                    android:id="@+id/ssv_sunriseset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sunrisesunset_tittle"
+                    android:layout_margin="10dp"
+                    app:ssv_label_horizontal_offset="12dp"
+                    app:ssv_label_text_color="@color/default_title_text_color"
+                    app:ssv_label_text_size="16sp"
+                    app:ssv_label_vertical_offset="2dp"
+                    app:ssv_shadow_color="@color/sunrise_shadow"
+                    app:ssv_sun_color="@color/amber"
+                    app:ssv_sun_radius="10dp"
+                    app:ssv_track_color="@color/teal"
+                    app:ssv_track_width="1.5dp" />
+
+                <TextView
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/ssv_sunriseset"
+                    app:layout_constraintLeft_toLeftOf="@id/ssv_sunriseset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="日出"
+                    android:textColor="@color/textColorDarkerGray"
+                    android:textSize="12sp" />
+                <TextView
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/ssv_sunriseset"
+                    app:layout_constraintRight_toRightOf="@id/ssv_sunriseset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="日落"
+                    android:textColor="@color/textColorDarkerGray"
+                    android:textSize="12sp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_life_index"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="4dp"
+            app:cardElevation="1dp"
+            app:contentPadding="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/cv_sunrisesunset">
 
             <RelativeLayout
                 android:layout_width="match_parent"

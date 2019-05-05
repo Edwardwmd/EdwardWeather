@@ -8,7 +8,6 @@ import com.edwardwmd.weather.bean.WeatherDetailBean;
 
 import java.util.List;
 
-import interfaces.heweather.com.interfacesmodule.bean.weather.Weather;
 
 public interface MainDetailContract {
 

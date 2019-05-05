@@ -23,7 +23,11 @@ import com.edwardwmd.weather.bean.WeatherDetailBean;
 import com.edwardwmd.weather.mvp.contract.MainDetailContract;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainDetailPresenter;
+import com.edwardwmd.weather.utils.StringUtils;
 import com.edwardwmd.weather.utils.ThreadUtils;
+import com.edwardwmd.weather.weight.SunriseSunsetView.SunriseSunsetView;
+import com.edwardwmd.weather.weight.SunriseSunsetView.Timer;
+import com.edwardwmd.weather.weight.SunriseSunsetView.formatter.SunriseSunsetLabelFormatter;
 import com.edwardwmd.weather.weight.WeatherTextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,6 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -60,6 +65,8 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 	  CardView cvLifeIndex;
 	  @BindView(R.id.nsv_layout)
 	  NestedScrollView nsvLayout;
+	  @BindView(R.id.ssv_sunriseset)
+	  SunriseSunsetView ssvSunriseset;
 	  private WeatherDetailAdapter dAdapter;
 	  private ForecastAdapter fAdapter;
 	  private LifeIndexAdapter iAdapter;
@@ -100,6 +107,24 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 		    detailRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 		    forecastRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		    lifeIndexRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+		    ssvSunriseset.setLabelFormatter(new SunriseSunsetLabelFormatter() {
+				@Override
+				public String formatSunriseLabel(@NonNull Timer sunrise) {
+					  return formatLabel(sunrise);
+				}
+
+				@Override
+				public String formatSunsetLabel(@NonNull Timer sunset) {
+					  return formatLabel(sunset);
+				}
+
+				private String formatLabel(Timer time) {
+					  return String.format(Locale.getDefault(), "%02d:%02d", time.hour, time.minute);
+				}
+		    });
+
+
+
 
 	  }
 
@@ -148,8 +173,6 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  @Override
 	  public void showDetailNowWeather(List<WeatherDetailBean> weathers) {
-		    Log.e("获取天气详情数据:", "--------->数据刷新了!!!!");
-
 		    dAdapter.setmDatas(weathers);
 		    detailRecyclerView.setAdapter(dAdapter);
 	  }
@@ -157,6 +180,9 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  @Override
 	  public void showForecastWeather(List<ForecastWeatherBean> forecastWeatherBeans) {
+		    ssvSunriseset.setSunriseTime(new Timer(forecastWeatherBeans.get(0).getSr()));
+		    ssvSunriseset.setSunsetTime(new Timer(forecastWeatherBeans.get(0).getSs()));
+		    ssvSunriseset.startAnimate();
 		    fAdapter.setAllDatas(forecastWeatherBeans);
 		    forecastRecyclerView.setAdapter(fAdapter);
 
@@ -165,8 +191,6 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  @Override
 	  public void showLifeIndex(List<LifeIdexBean> lifeIdexBeans) {
-		    Log.e("当前线程M", "当前是否为主线程：" + ThreadUtils.isMainThrean());
-		    Log.e("获取生活指数数据:", "--------->数据刷新了!!!!");
 		    iAdapter.setAllLifeIndexData(lifeIdexBeans);
 		    lifeIndexRecyclerView.setAdapter(iAdapter);
 	  }
