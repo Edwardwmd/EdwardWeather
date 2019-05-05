@@ -37,9 +37,14 @@ public class WeatherDetailAdapter extends BaseRecyclerViewAdapter<WeatherDetailA
           * @param weatherDetails 数据
           */
          public void setmDatas(List<WeatherDetailBean> weatherDetails) {
-                  this.weatherDetails.clear();
+//                  this.weatherDetails.clear();
                   this.weatherDetails=weatherDetails;
                   notifyDataSetChanged();
+         }
+
+         public void dataClear(){
+                 this.weatherDetails.clear();
+                 notifyDataSetChanged();
          }
          
          

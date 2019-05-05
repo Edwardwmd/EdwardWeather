@@ -148,11 +148,12 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 				@Override
 				public void onSuccess(List<Lifestyle> list) {
 					  if (list.get(0).getLifestyle() != null && list.get(0).getLifestyle().size() > 0) {
+						    Log.e("刷新数据333333:", "--------->数据刷新了!!!!" + new Gson().toJson(list));
 						    for (int j = 0; j < list.get(0).getLifestyle().size(); j++) {
 								lifeIdexData(j, lifeIdexBeans, list.get(0).getLifestyle());
 						    }
 						    mView.showLifeIndex(lifeIdexBeans);
-						    Log.e("刷新数据333333:", "--------->数据刷新了!!!!" + new Gson().toJson(list));
+
 					  }
 				}
 		    });
@@ -161,7 +162,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 
 	  @Override
 	  public void startLoad() {
-//		    mView.showLoading();
+		    mView.showLoading();
 	  }
 
 

@@ -29,11 +29,14 @@ public class LifeIndexAdapter extends BaseRecyclerViewAdapter<LifeIndexAdapter.V
          }
          
          public void setAllLifeIndexData(List<LifeIdexBean> lifeIdexBeans) {
-                  this.lifeIdexBeans.clear();
                   this.lifeIdexBeans = lifeIdexBeans;
                   notifyDataSetChanged();
          }
-         
+
+         public void dataClear(){
+                 this.lifeIdexBeans.clear();
+                 notifyDataSetChanged();
+         }
          @NonNull
          @Override
          public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

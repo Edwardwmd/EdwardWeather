@@ -29,9 +29,14 @@ public class ForecastAdapter extends BaseRecyclerViewAdapter<ForecastAdapter.Vie
          }
          
          public void setAllDatas(List<ForecastWeatherBean> mFws) {
-                  this.mFws.clear();
+//                  this.mFws.clear();
                   this.mFws = mFws;
                   notifyDataSetChanged();
+         }
+
+         public void dataClear(){
+                 this.mFws.clear();
+                 notifyDataSetChanged();
          }
          
          @NonNull

@@ -132,6 +132,10 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  @Override
 	  public void showLoading() {
+		    mPresenter.initDetailWeather();
+		    fAdapter.dataClear();
+		    dAdapter.dataClear();
+		    iAdapter.dataClear();
 	  }
 
 
@@ -156,6 +160,7 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 //		    Log.e("获取未来天气预报数据:", "--------->数据刷新了!!!!");
 		    fAdapter.setAllDatas(forecastWeatherBeans);
 		    forecastRecyclerView.setAdapter(fAdapter);
+
 	  }
 
 
@@ -179,7 +184,8 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 	  public void onGetMessage(MainMessage weather) {
 //		    if (START_REFRESH.equals(weather.weather)) {
 //				Log.e("刷新数据:", "--------->数据刷新了!!!!"+new Gson().toJson(weather.weathers));
-//		    mPresenter.initDetailWeather();
+		    mPresenter.startLoad();
+
 //		    }
 	  }
 
