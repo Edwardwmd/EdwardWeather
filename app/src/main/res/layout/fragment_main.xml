@@ -117,7 +117,7 @@
                     app:ssv_label_horizontal_offset="12dp"
                     app:ssv_label_text_color="@color/default_title_text_color"
                     app:ssv_label_text_size="16sp"
-                    app:ssv_label_vertical_offset="2dp"
+                    app:ssv_label_vertical_offset="5dp"
                     app:ssv_shadow_color="@color/sunrise_shadow"
                     app:ssv_sun_color="@color/amber"
                     app:ssv_sun_radius="10dp"

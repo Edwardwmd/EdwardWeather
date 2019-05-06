@@ -80,8 +80,8 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 					  //2.未来7日天气预报
 					  Forecast forecast = list.get(0);
 					  if (forecast.getDaily_forecast() != null && forecast.getDaily_forecast().size() > 0) {
-						    for (int i = 0; i < forecast.getDaily_forecast().size(); i++) {
-								getForcastBean(i, forecastWeatherBeans, forecast.getDaily_forecast());
+						    for (ForecastBase forecastBase : forecast.getDaily_forecast()) {
+								getForcastBean(forecastWeatherBeans, forecastBase);
 						    }
 						    mView.showForecastWeather(forecastWeatherBeans);
 					  }
@@ -99,8 +99,8 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 				public void onSuccess(List<Lifestyle> list) {
 					  //生活指数
 					  if (list.get(0).getLifestyle() != null && list.get(0).getLifestyle().size() > 0) {
-						    for (int j = 0; j < list.get(0).getLifestyle().size(); j++) {
-								lifeIdexData(j, lifeIdexBeans, list.get(0).getLifestyle());
+						    for (LifestyleBase lifestyleBase : list.get(0).getLifestyle()) {
+								lifeIdexData(lifeIdexBeans, lifestyleBase);
 						    }
 						    mView.showLifeIndex(lifeIdexBeans);
 
@@ -129,204 +129,195 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 	  }
 
 
-	  public void getForcastBean(int position, List<ForecastWeatherBean> forecastWeatherBeans, List<ForecastBase> fb) {
-		    if ("晴".equals(fb.get(position).getCond_txt_d())) {
+	  public void getForcastBean(List<ForecastWeatherBean> forecastWeatherBeans, ForecastBase fb) {
+		    if ("晴".equals(fb.getCond_txt_d())) {
 
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_100, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("多云".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_101, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("少云".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_102, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("晴间多云".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_103, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("阴".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_104, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("阵雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_300, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("强阵雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_301, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("雷阵雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_302, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("强雷阵雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_303, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("小雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_305, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("中雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_306, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("大雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_307, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("极端降雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_312, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("毛毛雨/细雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_309, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("暴雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_310, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("大暴雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_311, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("特大暴雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_312, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("小到中雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_314, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("中到大雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_315, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("大到暴雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_316, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("暴雨到大暴雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_317, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
-		    } else if ("大暴雨到特大暴雨".equals(fb.get(position).getCond_txt_d())) {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_318, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_100, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("多云".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_101, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("少云".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_102, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("晴间多云".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_103, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("阴".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_104, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("阵雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_300, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("强阵雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_301, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("雷阵雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_302, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("强雷阵雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_303, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("小雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_305, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("中雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_306, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("大雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_307, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("极端降雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_312, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("毛毛雨/细雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_309, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("暴雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_310, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("大暴雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_311, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("特大暴雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_312, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("小到中雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_314, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("中到大雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_315, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("大到暴雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_316, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("暴雨到大暴雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_317, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
+		    } else if ("大暴雨到特大暴雨".equals(fb.getCond_txt_d())) {
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_318, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
 		    } else {
-				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_999, fb.get(position).getDate(),
-					  fb.get(position).getCond_txt_d(), fb.get(position).getWind_dir(),
-					  fb.get(position).getWind_sc() + StringUtils.getString(R.string.wind_unit),
-					  fb.get(position).getTmp_min() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(position).getTmp_max() + StringUtils.getString(R.string.temp_unit),
-					  fb.get(0).getSr(), fb.get(0).getSs()));
+				forecastWeatherBeans.add(new ForecastWeatherBean(R.drawable.ic_999, fb.getDate(),
+					  fb.getCond_txt_d(), fb.getWind_dir(),
+					  fb.getWind_sc() + StringUtils.getString(R.string.wind_unit),
+					  fb.getTmp_min() + StringUtils.getString(R.string.temp_unit),
+					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
+					  fb.getSr(), fb.getSs()));
 		    }
 
 
 	  }
 
 
-	  private void lifeIdexData(int position, List<LifeIdexBean> lifeIdexBeans, List<LifestyleBase> lifestyles) {
-		    switch (position) {
-				case 0:
-
-					  lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_910, "舒适度指数", lifestyles.get(0).getBrf()));
-					  break;
-				case 1:
-					  lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_902, "洗车指数", lifestyles.get(1).getBrf()));
-					  break;
-				case 2:
-					  lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_903, "穿衣指数", lifestyles.get(2).getBrf()));
-					  break;
-				case 3:
-					  lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_904, "感冒指数", lifestyles.get(3).getBrf()));
-					  break;
-				case 4:
-					  lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_905, "运动指数", lifestyles.get(4).getBrf()));
-					  break;
-				case 5:
-					  lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_906, "旅游指数", lifestyles.get(5).getBrf()));
-					  break;
-				case 6:
-					  lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_907, "紫外线指数", lifestyles.get(6).getBrf()));
-					  break;
-				case 7:
-					  lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_908, "污染扩散指数", lifestyles.get(7).getBrf()));
-					  break;
-
+	  private void lifeIdexData(List<LifeIdexBean> lifeIdexBeans, LifestyleBase lifestyles) {
+		    if ("comf".equals(lifestyles.getType())) {
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_910, "舒适度指数", lifestyles.getBrf()));
+		    } else if ("cw".equals(lifestyles.getType())) {
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_902, "洗车指数", lifestyles.getBrf()));
+		    } else if ("drsg".equals(lifestyles.getType())) {
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_903, "穿衣指数", lifestyles.getBrf()));
+		    } else if ("flu".equals(lifestyles.getType())) {
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_904, "感冒指数", lifestyles.getBrf()));
+		    } else if ("sport".equals(lifestyles.getType())) {
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_905, "运动指数", lifestyles.getBrf()));
+		    } else if ("trav".equals(lifestyles.getType())) {
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_906, "旅游指数", lifestyles.getBrf()));
+		    } else if ("uv".equals(lifestyles.getType())) {
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_907, "紫外线指数", lifestyles.getBrf()));
+		    } else if ("air".equals(lifestyles.getType())) {
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_908, "污染扩散指数", lifestyles.getBrf()));
 		    }
+
+
 	  }
 
 

@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 
 
 import com.edwardwmd.weather.EdWeatherApp;
-import com.edwardwmd.weather.bean.DaoSession;
 import com.edwardwmd.weather.di.component.DaggerFragmentComponent;
 import com.edwardwmd.weather.di.component.FragmentComponent;
 import com.edwardwmd.weather.di.module.FragmentModule;

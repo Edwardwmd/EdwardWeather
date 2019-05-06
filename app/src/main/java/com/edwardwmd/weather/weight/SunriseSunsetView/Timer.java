@@ -18,8 +18,10 @@ public class Timer {
 
 
 	  public Timer(String time) {
+
 		    hour = StringUtils.getIntBeforeColon(time);
 		    minute = StringUtils.getIntAfterColon(time);
+
 
 	  }
 

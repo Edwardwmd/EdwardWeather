@@ -26,4 +26,11 @@
     <string name="text_Unknown">未知</string>
     <string name="text_temp_Unknown_show">__</string>
 
+    <string name="cp_search_hint_text">城市中文名或拼音</string>
+    <string name="cp_cancel">取消</string>
+    <string name="cp_no_result">没有找到，换个词试试~</string>
+    <string name="cp_locate_failed">定位失败</string>
+    <string name="cp_locating">正在定位…</string>
+    <string name="contentdescription_del_search">删除搜索</string>
+
 </resources>

@@ -12,6 +12,7 @@ import android.graphics.PathEffect;
 import android.graphics.RectF;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -27,24 +28,19 @@ import java.util.Locale;
 
 public class SunriseSunsetView extends View {
 
-
-	  private static final @ColorInt
-	  int DEFAULT_TRACK_COLOR = Color.WHITE;
+	  private static final @ColorInt int DEFAULT_TRACK_COLOR = Color.WHITE;
 	  private static final int DEFAULT_TRACK_WIDTH_PX = 4;
 
-	  private static final @ColorInt
-	  int DEFAULT_SUN_COLOR = Color.YELLOW;
+	  private static final @ColorInt int DEFAULT_SUN_COLOR = Color.YELLOW;
 	  private static final int DEFAULT_SUN_RADIUS_PX = 20;
 	  private static final int DEFAULT_SUN_STROKE_WIDTH_PX = 4;
 
-	  private static final @ColorInt
-	  int DEFAULT_SHADOW_COLOR = Color.parseColor("#32FFFFFF");
+	  private static final @ColorInt int DEFAULT_SHADOW_COLOR = Color.parseColor("#32FFFFFF");
 
-	  private static final @ColorInt
-	  int DEFAULT_LABEL_TEXT_COLOR = Color.WHITE;
+	  private static final @ColorInt int DEFAULT_LABEL_TEXT_COLOR = Color.WHITE;
 	  private static final int DEFAULT_LABEL_TEXT_SIZE = 40;
 	  private static final int DEFAULT_LABEL_VERTICAL_OFFSET_PX = 5;
-	  private static final int DEFAULT_LABEL_HORIZONTAL_OFFSET_PX = 15;
+	  private static final int DEFAULT_LABEL_HORIZONTAL_OFFSET_PX = 20;
 
 	  /**
 	   * 当前日出日落比率, mRatio < 0: 未日出, mRatio > 1 已日落
@@ -52,8 +48,7 @@ public class SunriseSunsetView extends View {
 	  private float mRatio;
 
 	  private Paint mTrackPaint;  // 绘制半圆轨迹的Paint
-	  private @ColorInt
-	  int mTrackColor = DEFAULT_TRACK_COLOR; // 轨迹的颜色
+	  private @ColorInt int mTrackColor = DEFAULT_TRACK_COLOR; // 轨迹的颜色
 	  private int mTrackWidth = DEFAULT_TRACK_WIDTH_PX;    // 轨迹的宽度
 	  // 轨迹的PathEffect
 	  private PathEffect mTrackPathEffect = new DashPathEffect(new float[]{15, 15}, 1);
@@ -61,19 +56,16 @@ public class SunriseSunsetView extends View {
 	  private float mTrackRadius;
 
 	  private Paint mShadowPaint; // 绘制日出日落阴影的Paint
-	  private @ColorInt
-	  int mShadowColor = DEFAULT_SHADOW_COLOR; // 阴影颜色
+	  private @ColorInt int mShadowColor = DEFAULT_SHADOW_COLOR; // 阴影颜色
 
 	  private Paint mSunPaint;    // 绘制太阳的Paint
-	  private @ColorInt
-	  int mSunColor = DEFAULT_SUN_COLOR;  // 太阳颜色
+	  private @ColorInt int mSunColor = DEFAULT_SUN_COLOR;  // 太阳颜色
 	  private float mSunRadius = DEFAULT_SUN_RADIUS_PX; // 太阳半径
 	  private Paint.Style mSunPaintStyle = Paint.Style.FILL; // 太阳Paint样式,默认FILL
 
 	  private TextPaint mLabelPaint;   // 绘制日出日落时间的Paint
 	  private int mLabelTextSize = DEFAULT_LABEL_TEXT_SIZE; // 标签文字大小
-	  private @ColorInt
-	  int mLabelTextColor = DEFAULT_LABEL_TEXT_COLOR; // 标签颜色
+	  private @ColorInt int mLabelTextColor = DEFAULT_LABEL_TEXT_COLOR; // 标签颜色
 	  private int mLabelVerticalOffset = DEFAULT_LABEL_VERTICAL_OFFSET_PX; // 竖直方向间距
 	  private int mLabelHorizontalOffset = DEFAULT_LABEL_HORIZONTAL_OFFSET_PX; // 水平方向间距
 
@@ -96,21 +88,19 @@ public class SunriseSunsetView extends View {
 	  // Label Formatter - Default is a Simple label formatter.
 	  private SunriseSunsetLabelFormatter mLabelFormatter = new SimpleSunriseSunsetLabelFormatter();
 
-
 	  public SunriseSunsetView(Context context) {
 		    super(context);
 		    init();
 	  }
 
-
 	  public SunriseSunsetView(Context context, @Nullable AttributeSet attrs) {
 		    this(context, attrs, 0);
 	  }
 
-
 	  public SunriseSunsetView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		    super(context, attrs, defStyleAttr);
 		    TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SunriseSunsetView, defStyleAttr, 0);
+
 		    if (a != null) {
 				mTrackColor = a.getColor(R.styleable.SunriseSunsetView_ssv_track_color, DEFAULT_TRACK_COLOR);
 				mTrackWidth = a.getDimensionPixelSize(R.styleable.SunriseSunsetView_ssv_track_width, DEFAULT_TRACK_WIDTH_PX);
@@ -128,7 +118,6 @@ public class SunriseSunsetView extends View {
 		    }
 		    init();
 	  }
-
 
 	  @Override
 	  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -151,7 +140,6 @@ public class SunriseSunsetView extends View {
 		    setMeasuredDimension(widthSpecSize, expectedHeight);
 	  }
 
-
 	  private void init() {
 		    // 初始化半圆轨迹的画笔
 		    mTrackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -172,7 +160,6 @@ public class SunriseSunsetView extends View {
 		    prepareLabelPaint();
 	  }
 
-
 	  // 半圆轨迹的画笔
 	  private void prepareTrackPaint() {
 		    mTrackPaint.setColor(mTrackColor);
@@ -180,12 +167,10 @@ public class SunriseSunsetView extends View {
 		    mTrackPaint.setPathEffect(mTrackPathEffect);
 	  }
 
-
 	  // 阴影的画笔
 	  private void prepareShadowPaint() {
 		    mShadowPaint.setColor(mShadowColor);
 	  }
-
 
 	  // 太阳的画笔
 	  private void prepareSunPaint() {
@@ -193,7 +178,6 @@ public class SunriseSunsetView extends View {
 		    mSunPaint.setStrokeWidth(DEFAULT_SUN_STROKE_WIDTH_PX);
 		    mSunPaint.setStyle(mSunPaintStyle);
 	  }
-
 
 	  // 标签的画笔
 	  private void prepareLabelPaint() {
@@ -212,7 +196,6 @@ public class SunriseSunsetView extends View {
 		    drawSunriseSunsetLabel(canvas);
 	  }
 
-
 	  // 绘制太阳轨道（半圆）
 	  private void drawSunTrack(Canvas canvas) {
 		    prepareTrackPaint();
@@ -221,7 +204,6 @@ public class SunriseSunsetView extends View {
 		    canvas.drawArc(rectF, 180, 180, false, mTrackPaint);
 		    canvas.restore();
 	  }
-
 
 	  // 绘制日出日落阴影部分
 	  private void drawShadow(Canvas canvas) {
@@ -241,7 +223,6 @@ public class SunriseSunsetView extends View {
 		    canvas.restore();
 	  }
 
-
 	  // 绘制太阳
 	  private void drawSun(Canvas canvas) {
 		    prepareSunPaint();
@@ -253,7 +234,6 @@ public class SunriseSunsetView extends View {
 
 		    canvas.restore();
 	  }
-
 
 	  // 绘制日出日落标签
 	  private void drawSunriseSunsetLabel(Canvas canvas) {
@@ -280,102 +260,82 @@ public class SunriseSunsetView extends View {
 		    canvas.restore();
 	  }
 
-
 	  public void setRatio(float ratio) {
 		    mRatio = ratio;
 		    invalidate();
 	  }
 
-
 	  public void setSunriseTime(Timer sunriseTime) {
 		    mSunriseTime = sunriseTime;
 	  }
-
 
 	  public Timer getSunriseTime() {
 		    return mSunriseTime;
 	  }
 
-
 	  public void setSunsetTime(Timer sunsetTime) {
 		    mSunsetTime = sunsetTime;
 	  }
-
 
 	  public Timer getSunsetTime() {
 		    return mSunsetTime;
 	  }
 
-
 	  public float getSunRadius() {
 		    return mSunRadius;
 	  }
-
 
 	  public SunriseSunsetLabelFormatter getLabelFormatter() {
 		    return mLabelFormatter;
 	  }
 
-
 	  public void setLabelFormatter(SunriseSunsetLabelFormatter labelFormatter) {
 		    mLabelFormatter = labelFormatter;
 	  }
-
 
 	  public void setTrackColor(@ColorInt int trackColor) {
 		    mTrackColor = trackColor;
 	  }
 
-
 	  public void setTrackWidth(int trackWidthInPx) {
 		    mTrackWidth = trackWidthInPx;
 	  }
-
 
 	  public void setTrackPathEffect(PathEffect trackPathEffect) {
 		    mTrackPathEffect = trackPathEffect;
 	  }
 
-
 	  public void setSunColor(@ColorInt int sunColor) {
 		    mSunColor = sunColor;
 	  }
-
 
 	  public void setSunRadius(float sunRadius) {
 		    mSunRadius = sunRadius;
 	  }
 
-
 	  public void setSunPaintStyle(Paint.Style sunPaintStyle) {
 		    mSunPaintStyle = sunPaintStyle;
 	  }
-
 
 	  public void setShadowColor(@ColorInt int shadowColor) {
 		    mShadowColor = shadowColor;
 	  }
 
-
 	  public void setLabelTextSize(int labelTextSize) {
 		    mLabelTextSize = labelTextSize;
 	  }
-
 
 	  public void setLabelTextColor(@ColorInt int labelTextColor) {
 		    mLabelTextColor = labelTextColor;
 	  }
 
-
 	  public void setLabelVerticalOffset(int labelVerticalOffset) {
 		    mLabelVerticalOffset = labelVerticalOffset;
 	  }
 
-
 	  public void setLabelHorizontalOffset(int labelHorizontalOffset) {
 		    mLabelHorizontalOffset = labelHorizontalOffset;
 	  }
-
 
 	  public void startAnimate() {
 		    if (mSunriseTime == null || mSunsetTime == null) {
@@ -387,13 +347,13 @@ public class SunriseSunsetView extends View {
 		    int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 		    int currentMinute = calendar.get(Calendar.MINUTE);
 		    int currentTime = currentHour * Timer.MINUTES_PER_HOUR + currentMinute;
-		    float ratio = 1.0f * (currentTime - sunrise) / (sunset - sunrise);
+
+		    float ratio = Math.abs(1.0f * (currentTime - sunrise) / (sunset - sunrise));
+		    Log.e("Ratio---->","参数值："+ratio);
 		    ratio = ratio <= 0 ? 0 : (ratio > 1.0f ? 1 : ratio);
 		    ObjectAnimator animator = ObjectAnimator.ofFloat(this, "ratio", 0f, ratio);
 		    animator.setDuration(3500L);
 		    animator.setInterpolator(new LinearInterpolator());
 		    animator.start();
 	  }
-
-
 }

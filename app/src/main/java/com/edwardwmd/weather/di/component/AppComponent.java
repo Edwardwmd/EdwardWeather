@@ -2,7 +2,6 @@ package com.edwardwmd.weather.di.component;
 
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.LocationManager;
-import com.edwardwmd.weather.mvp.model.data.GreenDaoOptions;
 import com.edwardwmd.weather.di.module.AppModule;
 
 import javax.inject.Singleton;
@@ -14,7 +13,7 @@ import dagger.Component;
 public interface AppComponent {
 	  EdWeatherApp getContext();  // 提供App的Context
 
-	  GreenDaoOptions getGreenDaoOptions(); //数据中心
+//	  GreenDaoOptions getGreenDaoOptions(); //数据中心
 
 	  LocationManager getLocationManager();
 

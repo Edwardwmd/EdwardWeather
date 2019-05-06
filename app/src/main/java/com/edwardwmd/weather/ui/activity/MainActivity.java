@@ -1,12 +1,12 @@
 package com.edwardwmd.weather.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,22 +15,27 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BaseMVPActivity;
+import com.edwardwmd.weather.bean.City;
 import com.edwardwmd.weather.bean.TopWeather;
 import com.edwardwmd.weather.mvp.contract.MainContract;
+import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainPresenter;
 import com.edwardwmd.weather.ui.fragment.DrawerFragment;
 import com.edwardwmd.weather.ui.fragment.MainFragment;
 import com.edwardwmd.weather.utils.DateUtils;
 import com.edwardwmd.weather.utils.StringUtils;
+import com.edwardwmd.weather.utils.ToastUtils;
+import com.edwardwmd.weather.weight.citypickview.CityPicker;
+import com.edwardwmd.weather.weight.citypickview.OnPickListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
@@ -63,7 +68,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 	  @BindView(R.id.fragment_container_drawer_menu)
 	  FrameLayout fragmentContainerDrawerMenu;
 	  @BindView(R.id.drawer_layout)
-	  DrawerLayout drawerLayout;
+	  public DrawerLayout drawerLayout;
 
 
 	  @Override
@@ -93,16 +98,20 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 		    popToFragment();
 		    //初始化天气数据
 		    mPresenter.initTopPageWeather();
+
+
 	  }
 
 
 	  @SuppressLint("SetTextI18n")
 	  private void init() {
+		    EventBus.getDefault().register(this);
 		    tvUpdateDate.setText(StringUtils.getString(R.string.update_by_text) + DateUtils.getCurrentSystemDate());
 		    imgWeatherShow.setImageResource(R.drawable.ic_999);
 		    tvWeatherInfo.setText(StringUtils.getString(R.string.text_Unknown));
 		    tvTemp.setText(StringUtils.getString(R.string.text_temp_Unknown_show));
 		    edCollapsingToolbar.setTitle(StringUtils.getString(R.string.text_Unknown));
+
 	  }
 
 
@@ -132,6 +141,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 	  @Override
 	  protected void onDestroy() {
 		    super.onDestroy();
+		    if (EventBus.getDefault().isRegistered(this))
+				EventBus.getDefault().unregister(this);
 		    EdWeatherApp.getInstance().removeActivity(this);
 	  }
 
@@ -171,6 +182,14 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 		    assert drawerLayout != null;
 		    drawerLayout.addDrawerListener(toggle);
 		    toggle.syncState();
+	  }
+
+
+	  @Subscribe(threadMode = ThreadMode.MAIN)
+	  public void omGetSearchCityData(AddCityMessage city) {
+		    ToastUtils.showToast_S("---->当前城市： " + city.city.getName());
+		    mPresenter.addSearchCity(city.city);
+
 	  }
 
 

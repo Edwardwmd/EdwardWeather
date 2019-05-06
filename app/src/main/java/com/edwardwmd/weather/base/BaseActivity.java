@@ -1,14 +1,13 @@
 package com.edwardwmd.weather.base;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,7 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.edwardwmd.weather.weight.StatusBarHelper;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -62,7 +60,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 	  }
 
 
-	  protected abstract int initLayout();
+	  protected abstract @LayoutRes
+	  int initLayout();
 
 
 	  private void initTheme() {
@@ -92,7 +91,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 	  }
 
-	  public  void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
+
+	  public void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
 		    FragmentTransaction transaction = fragmentManager.beginTransaction();
 		    transaction.add(frameId, fragment);
 		    transaction.commit();

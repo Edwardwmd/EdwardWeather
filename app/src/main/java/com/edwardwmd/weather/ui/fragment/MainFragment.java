@@ -125,7 +125,6 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 
 
-
 	  }
 
 
