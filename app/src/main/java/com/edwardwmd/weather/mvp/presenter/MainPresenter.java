@@ -31,7 +31,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
 
 	  private boolean isFirstSearch = false;
-	  //	  private ChinaCityInfo city;
+
 	  //声明AMapLocationClient类对象
 	  private AMapLocationClient mLocationClient = null;
 	  private Weather weather;

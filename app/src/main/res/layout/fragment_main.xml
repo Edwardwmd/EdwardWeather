@@ -107,7 +107,7 @@
                     app:weatherViewText="@string/title_sunrisesunset_module"
                     app:weatherViewTextSize="14sp" />
 
-                <com.edwardwmd.weather.weight.SunriseSunsetView.SunriseSunsetView
+                <com.edwardwmd.weather.weight.sunrisesunsetview.SunriseSunsetView
                     app:layout_constraintTop_toBottomOf="@id/sunrisesunset_tittle"
                     android:id="@+id/ssv_sunriseset"
                     android:layout_width="match_parent"

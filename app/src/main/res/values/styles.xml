@@ -1,15 +1,5 @@
 <resources>
 
-    <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-    <!--</style>-->
-
-
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="BaseAppTheme" />
     <style name="BaseAppTheme" parent="BaseAppTheme.NoActionBar" />
 
@@ -33,8 +23,8 @@
     </style>
 
     <style name="DefaultCityPickerAnimation" parent="@android:style/Animation">
-        <item name="android:windowEnterAnimation">@anim/cp_push_bottom_in</item>
-        <item name="android:windowExitAnimation">@anim/cp_push_bottom_out</item>
+        <item name="android:windowEnterAnimation">@anim/custom_push_down_in</item>
+        <item name="android:windowExitAnimation">@anim/custom_push_up_out</item>
     </style>
 
     <style name="DefaultCityPickerTheme" parent="AppTheme">
@@ -80,5 +70,8 @@
     <style name="CustomAnim">
         <item name="android:windowEnterAnimation">@anim/custom_push_down_in</item>
         <item name="android:windowExitAnimation">@anim/custom_push_up_out</item>
+    </style><style name="PDAnim">
+        <item name="android:windowEnterAnimation">@anim/cp_push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/cp_push_bottom_out</item>
     </style>
 </resources>

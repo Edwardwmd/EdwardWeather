@@ -2,6 +2,7 @@ package com.edwardwmd.weather.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -143,12 +144,13 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 	  }
 
 
+	  @SuppressLint("SetTextI18n")
 	  @Override
 	  public void showTopPageWeather(TopWeather topWeather) {
 		    tvUpdateDate.setText(StringUtils.getString(R.string.update_by_text) + DateUtils.getCurrentSystemDate());
 		    imgWeatherShow.setImageResource(topWeather.getIconResource());
 		    tvWeatherInfo.setText(topWeather.getWeatherText());
-		    tvTemp.setText(topWeather.getTep_value());
+		    tvTemp.setText(topWeather.getTep_value()+"°");
 		    edCollapsingToolbar.setTitle(topWeather.getAddress());
 
 	  }
@@ -183,7 +185,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
 	  @Subscribe(threadMode = ThreadMode.MAIN)
 	  public void omGetSearchCityData(AddCityMessage city) {
-		    ToastUtils.showToast_S("---->当前城市： " + city.city.getCity_CN());
+		    Log.i("Search City", "Data is: " + city.city.getCity_CN());
 		    mPresenter.addSearchCity(city.city);
 
 	  }

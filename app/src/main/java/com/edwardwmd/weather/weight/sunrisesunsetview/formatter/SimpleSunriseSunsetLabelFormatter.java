@@ -1,8 +1,8 @@
-package com.edwardwmd.weather.weight.SunriseSunsetView.formatter;
+package com.edwardwmd.weather.weight.sunrisesunsetview.formatter;
 
 import androidx.annotation.NonNull;
 
-import com.edwardwmd.weather.weight.SunriseSunsetView.Timer;
+import com.edwardwmd.weather.weight.sunrisesunsetview.Timer;
 
 import java.util.Locale;
 

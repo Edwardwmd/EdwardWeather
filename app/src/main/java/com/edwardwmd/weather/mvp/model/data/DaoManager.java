@@ -20,14 +20,17 @@ import static com.edwardwmd.weather.utils.ConstantUtils.DB_PATH;
 
 
 public class DaoManager {
+
+
 	  private static final String TAG = DaoManager.class.getSimpleName();
 	  private Context mC;
 
-
+        private final int BYTE_STREAM=2048;
 	  private volatile static DaoManager manager;  //多线程中要被共享的使用volatile关键字修饰
 	  private DaoMaster.DevOpenHelper mDevOpenHelper;
 	  private DaoMaster mDaoMaster;
 	  private DaoSession mDaoSession;
+
 
 	  /**
 	   * 单例模式操作数据库
@@ -35,15 +38,22 @@ public class DaoManager {
 	   * @return
 	   */
 	  public static DaoManager getInstance() {
-			if (manager == null) {
-				  manager = new DaoManager();
-			}
-			return manager;
+		    if (manager == null) {
+				synchronized (DaoManager.class) {
+					  if (manager == null) {
+						    manager = new DaoManager();
+					  }
+				}
+
+		    }
+		    return manager;
 	  }
 
+
 	  public void init(Context context) {
-			this.mC = context;
+		    this.mC = context;
 	  }
+
 
 	  /**
 	   * 判断是否有存在数据库，如果没有则创建
@@ -51,12 +61,13 @@ public class DaoManager {
 	   * @return
 	   */
 	  public DaoMaster getDaoMaster() {
-			if (mDaoMaster == null) {
-				  DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mC, DB_NAME, null);
-				  mDaoMaster = new DaoMaster(helper.getWritableDatabase());
-			}
-			return mDaoMaster;
+		    if (mDaoMaster == null) {
+				DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mC, DB_NAME, null);
+				mDaoMaster = new DaoMaster(helper.getWritableDatabase());
+		    }
+		    return mDaoMaster;
 	  }
+
 
 	  /**
 	   * 完成对数据库的添加、删除、修改、查询操作，仅仅是一个接口
@@ -64,13 +75,13 @@ public class DaoManager {
 	   * @return
 	   */
 	  public DaoSession getDaoSession() {
-			if (mDaoSession == null) {
-				  if (mDaoMaster == null) {
-						mDaoMaster = getDaoMaster();
-				  }
-				  mDaoSession = mDaoMaster.newSession();
-			}
-			return mDaoSession;
+		    if (mDaoSession == null) {
+				if (mDaoMaster == null) {
+					  mDaoMaster = getDaoMaster();
+				}
+				mDaoSession = mDaoMaster.newSession();
+		    }
+		    return mDaoSession;
 	  }
 
 
@@ -78,10 +89,11 @@ public class DaoManager {
 	   * 打开输出日志，默认关闭
 	   */
 	  public void setDebug() {
-			QueryBuilder.LOG_SQL = true;
-			QueryBuilder.LOG_VALUES = true;
-			Log.i(TAG, "打开输出日志");
+		    QueryBuilder.LOG_SQL = true;
+		    QueryBuilder.LOG_VALUES = true;
+		    Log.i(TAG, "打开输出日志");
 	  }
+
 
 	  /**
 	   * 将assets文件夹下文件拷贝到/databases/下
@@ -106,8 +118,8 @@ public class DaoManager {
 		    try {
 				in = context.getResources().openRawResource(R.raw.city); // 从raw目录下复制
 				out = new FileOutputStream(file);
-				int length = -1;
-				byte[] buf = new byte[in.available()];
+				int length;
+				byte[] buf = new byte[BYTE_STREAM];
 				while ((length = in.read(buf)) != -1) {
 					  out.write(buf, 0, length);
 				}
@@ -129,26 +141,27 @@ public class DaoManager {
 	   * 关闭所有的操作，数据库开启后，使用完毕要关闭
 	   */
 	  public void closeConnection() {
-			closeHelper();
-			closeDaoSession();
-			Log.i(TAG, "-------->数据库关闭操作<---------");
+		    closeHelper();
+		    closeDaoSession();
+		    Log.i(TAG, "-------->数据库关闭操作<---------");
 	  }
 
 
 	  public void closeDaoSession() {
-			if (mDaoSession != null) {
-				  mDaoSession.clear();
-				  mDaoSession = null;
-				  Log.i(TAG, "-------->关闭DaoSession<--------");
-			}
+		    if (mDaoSession != null) {
+				mDaoSession.clear();
+				mDaoSession = null;
+				Log.i(TAG, "-------->关闭DaoSession<--------");
+		    }
 	  }
 
+
 	  public void closeHelper() {
-			if (mDevOpenHelper != null) {
-				  mDevOpenHelper.close();
-				  mDevOpenHelper = null;
-				  Log.i(TAG, "--------->关闭Helper<---------");
-			}
+		    if (mDevOpenHelper != null) {
+				mDevOpenHelper.close();
+				mDevOpenHelper = null;
+				Log.i(TAG, "--------->关闭Helper<---------");
+		    }
 	  }
 
 

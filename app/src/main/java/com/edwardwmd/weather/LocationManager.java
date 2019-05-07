@@ -50,7 +50,6 @@ public class LocationManager {
 	  public AMapLocationListener mLocationListener = aMapLocation -> {
 
 		  if (aMapLocation.getErrorCode() == 0) {
-//		  	  Log.e("初始化定位","只在此山中！！！！！");
 		    lon = aMapLocation.getLongitude();
 		    lat = aMapLocation.getLatitude();
 		    mLocationClient.onDestroy();

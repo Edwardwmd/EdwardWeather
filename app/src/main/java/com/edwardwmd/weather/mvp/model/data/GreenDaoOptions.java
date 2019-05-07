@@ -3,6 +3,7 @@ package com.edwardwmd.weather.mvp.model.data;
 import android.content.Context;
 
 
+import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.ChinaCityInfoDao;
 
@@ -31,11 +32,11 @@ public class GreenDaoOptions {
 	  /**
 	   * 初始化数据表操作类
 	   *
-	   * @param context
+	   *
 	   */
-	  public GreenDaoOptions(Context context) {
+	  public GreenDaoOptions() {
 		    manager = DaoManager.getInstance();
-		    manager.init(context);
+		    manager.init(EdWeatherApp.getAppContext());
 	  }
 
 

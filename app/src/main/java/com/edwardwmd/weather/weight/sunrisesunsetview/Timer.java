@@ -1,4 +1,4 @@
-package com.edwardwmd.weather.weight.SunriseSunsetView;
+package com.edwardwmd.weather.weight.sunrisesunsetview;
 
 import com.edwardwmd.weather.utils.StringUtils;
 

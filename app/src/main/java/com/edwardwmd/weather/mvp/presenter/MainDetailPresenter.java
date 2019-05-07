@@ -1,15 +1,25 @@
 package com.edwardwmd.weather.mvp.presenter;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+
+import androidx.core.content.ContextCompat;
+
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.LocationManager;
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BasePresenter;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.ForecastWeatherBean;
 import com.edwardwmd.weather.bean.LifeIdexBean;
 import com.edwardwmd.weather.bean.WeatherDetailBean;
 import com.edwardwmd.weather.mvp.contract.MainDetailContract;
 import com.edwardwmd.weather.utils.StringUtils;
+import com.edwardwmd.weather.utils.ToastUtils;
 
 
 import java.util.ArrayList;
@@ -25,20 +35,25 @@ import interfaces.heweather.com.interfacesmodule.bean.weather.now.Now;
 import interfaces.heweather.com.interfacesmodule.bean.weather.now.NowBase;
 import interfaces.heweather.com.interfacesmodule.view.HeWeather;
 
+import static com.edwardwmd.weather.utils.ConstantUtils.NOW_LAT;
+import static com.edwardwmd.weather.utils.ConstantUtils.NOW_LON;
+
 
 public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> implements MainDetailContract.Presenter {
 
 
+	  //声明AMapLocationClient类对象
+	  public AMapLocationClient mLocationClient = null;
 	  private List<WeatherDetailBean> detailBeans = new ArrayList<>();
 	  private List<ForecastWeatherBean> forecastWeatherBeans = new ArrayList<>();
 	  private List<LifeIdexBean> lifeIdexBeans = new ArrayList<>();
-	  private LocationManager locationManager;
+	  private Double mLon = NOW_LON;
+	  private Double mLat = NOW_LAT;
+	  private boolean isFirstSearch = false;
 
 
 	  @Inject
-	  public MainDetailPresenter(LocationManager locationManager) {
-		    this.locationManager = locationManager;
-		    locationManager.initLocation();
+	  public MainDetailPresenter() {
 	  }
 
 
@@ -47,7 +62,18 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 		    if (!isAttachView()) {
 				return;
 		    }
-		    HeWeather.getWeatherNow(EdWeatherApp.getAppContext(), locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherNowBeanListener() {
+		    if (!isFirstSearch) {
+				initLocation();
+		    } else {
+				initData(mLon, mLat);
+		    }
+
+
+	  }
+
+
+	  private void initData(Double lon, Double lat) {
+		    HeWeather.getWeatherNow(EdWeatherApp.getAppContext(), lon + "," + lat, new HeWeather.OnResultWeatherNowBeanListener() {
 				@Override
 				public void onError(Throwable throwable) {
 					  mView.showErrorMsg(throwable.getMessage());
@@ -62,7 +88,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 				}
 		    });
 
-		    HeWeather.getWeatherForecast(EdWeatherApp.getAppContext(), locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherForecastBeanListener() {
+		    HeWeather.getWeatherForecast(EdWeatherApp.getAppContext(), lon + "," + lat , new HeWeather.OnResultWeatherForecastBeanListener() {
 				@Override
 				public void onError(Throwable throwable) {
 					  mView.showErrorMsg(throwable.getMessage());
@@ -82,7 +108,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 				}
 		    });
 
-		    HeWeather.getWeatherLifeStyle(EdWeatherApp.getAppContext(), locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherLifeStyleBeanListener() {
+		    HeWeather.getWeatherLifeStyle(EdWeatherApp.getAppContext(), lon + "," + lat, new HeWeather.OnResultWeatherLifeStyleBeanListener() {
 				@Override
 				public void onError(Throwable throwable) {
 //					  mView.showErrorMsg(throwable.getMessage());
@@ -101,12 +127,64 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 					  }
 				}
 		    });
+
 	  }
 
 
 	  @Override
 	  public void startLoad() {
 		    mView.showLoading();
+	  }
+
+
+	  @Override
+	  public void addSearchCity(ChinaCityInfo chinaCityInfo) {
+		    isFirstSearch = true;
+		    mLat = chinaCityInfo.getLatitude();
+		    mLon = chinaCityInfo.getLongitude();
+		    initData(mLon, mLat);
+	  }
+
+
+	  //声明定位回调监听器
+	  public AMapLocationListener mLocationListener = aMapLocation -> {
+
+		    if (aMapLocation.getErrorCode() == 0) {
+				Double lon = aMapLocation.getLongitude();
+				Double lat = aMapLocation.getLatitude();
+				initData(lon, lat);
+				mLocationClient.onDestroy();
+		    } else {
+				if (ContextCompat.checkSelfPermission(EdWeatherApp.getAppContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+					  != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(EdWeatherApp.getAppContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+					  != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(EdWeatherApp.getAppContext(), Manifest.permission.READ_PHONE_STATE)
+					  != PackageManager.PERMISSION_GRANTED) {
+					  ToastUtils.showToast_S("如需获取当前位置，请打开GPS定位权限！");
+
+				}
+				mLocationClient.onDestroy();
+		    }
+	  };
+
+
+	  public void initLocation() {
+		    //初始化定位
+		    mLocationClient = new AMapLocationClient(EdWeatherApp.getAppContext().getApplicationContext());
+		    //设置定位回调监听
+		    mLocationClient.setLocationListener(mLocationListener);
+		    //声明AMapLocationClientOption对象
+		    AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+		    //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+		    mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+		    //设置定位间隔,单位毫秒,默认为2000ms，最低15000ms。
+		    mLocationOption.setInterval(15000);
+		    //单位是毫秒，默认30000毫秒，建议超时时间不要低于25000毫秒。
+		    mLocationOption.setHttpTimeOut(25000);
+		    //给定位客户端对象设置定位参数
+		    mLocationClient.setLocationOption(mLocationOption);
+		    //启动定位
+		    mLocationClient.startLocation();
+
 	  }
 
 

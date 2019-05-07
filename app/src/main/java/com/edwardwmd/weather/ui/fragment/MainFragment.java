@@ -24,11 +24,9 @@ import com.edwardwmd.weather.mvp.contract.MainDetailContract;
 import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainDetailPresenter;
-import com.edwardwmd.weather.utils.StringUtils;
-import com.edwardwmd.weather.utils.ThreadUtils;
-import com.edwardwmd.weather.weight.SunriseSunsetView.SunriseSunsetView;
-import com.edwardwmd.weather.weight.SunriseSunsetView.Timer;
-import com.edwardwmd.weather.weight.SunriseSunsetView.formatter.SunriseSunsetLabelFormatter;
+import com.edwardwmd.weather.weight.sunrisesunsetview.SunriseSunsetView;
+import com.edwardwmd.weather.weight.sunrisesunsetview.Timer;
+import com.edwardwmd.weather.weight.sunrisesunsetview.formatter.SunriseSunsetLabelFormatter;
 import com.edwardwmd.weather.weight.WeatherTextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -114,16 +112,17 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 					  return formatLabel(sunrise);
 				}
 
+
 				@Override
 				public String formatSunsetLabel(@NonNull Timer sunset) {
 					  return formatLabel(sunset);
 				}
 
+
 				private String formatLabel(Timer time) {
 					  return String.format(Locale.getDefault(), "%02d:%02d", time.hour, time.minute);
 				}
 		    });
-
 
 
 	  }
@@ -157,10 +156,9 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  @Override
 	  public void showLoading() {
+		    Log.i("mainfragment", "刷新数据了！！！！！！！！！！");
 		    mPresenter.initDetailWeather();
-		    fAdapter.dataClear();
-		    dAdapter.dataClear();
-		    iAdapter.dataClear();
+		    clearData();
 	  }
 
 
@@ -210,6 +208,21 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  }
 
+
+	  @Subscribe(threadMode = ThreadMode.MAIN)
+	  public void omGetSearchCityData(AddCityMessage city) {
+		    Log.i("Search City", "Data is: " + city.city.getCity_CN());
+		    mPresenter.addSearchCity(city.city);
+		    clearData();
+
+	  }
+
+
+	  private void clearData() {
+		    fAdapter.dataClear();
+		    dAdapter.dataClear();
+		    iAdapter.dataClear();
+	  }
 
 
 }

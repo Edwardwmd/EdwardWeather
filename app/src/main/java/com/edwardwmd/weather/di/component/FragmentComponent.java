@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.edwardwmd.weather.di.module.FragmentModule;
 import com.edwardwmd.weather.di.scope.FragmentScope;
+import com.edwardwmd.weather.ui.fragment.DrawerFragment;
 import com.edwardwmd.weather.ui.fragment.MainFragment;
 
 import dagger.Component;
@@ -16,6 +17,8 @@ public interface FragmentComponent {
 	  Activity getActivity();
 
 	  void inject(MainFragment mainFragment);
+
+	  void inject(DrawerFragment mainFragment);
 
 
 }

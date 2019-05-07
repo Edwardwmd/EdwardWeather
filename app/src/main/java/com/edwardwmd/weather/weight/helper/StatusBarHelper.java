@@ -1,4 +1,4 @@
-package com.edwardwmd.weather.weight;
+package com.edwardwmd.weather.weight.helper;
 
 import android.app.Activity;
 import android.os.Build;

@@ -1,4 +1,4 @@
-package com.edwardwmd.weather.weight.SunriseSunsetView;
+package com.edwardwmd.weather.weight.sunrisesunsetview;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -20,8 +20,8 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
 import com.edwardwmd.weather.R;
-import com.edwardwmd.weather.weight.SunriseSunsetView.formatter.SimpleSunriseSunsetLabelFormatter;
-import com.edwardwmd.weather.weight.SunriseSunsetView.formatter.SunriseSunsetLabelFormatter;
+import com.edwardwmd.weather.weight.sunrisesunsetview.formatter.SimpleSunriseSunsetLabelFormatter;
+import com.edwardwmd.weather.weight.sunrisesunsetview.formatter.SunriseSunsetLabelFormatter;
 
 import java.util.Calendar;
 import java.util.Locale;

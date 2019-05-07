@@ -2,6 +2,7 @@ package com.edwardwmd.weather.mvp.contract;
 
 import com.edwardwmd.weather.base.BaseView;
 import com.edwardwmd.weather.base.IPresenter;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.ForecastWeatherBean;
 import com.edwardwmd.weather.bean.LifeIdexBean;
 import com.edwardwmd.weather.bean.WeatherDetailBean;
@@ -36,6 +37,8 @@ public interface MainDetailContract {
 		    void initDetailWeather();
 
 		    void startLoad();
+
+		    void addSearchCity(ChinaCityInfo chinaCityInfo);
 	  }
 
 

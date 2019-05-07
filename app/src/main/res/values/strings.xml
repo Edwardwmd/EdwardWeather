@@ -24,7 +24,7 @@
     <string name="update_by_text">更新于</string>
     <string name="_2019_edwardweather_all_rights_reserved">Copyright © EdwardWeather,all rights reserved</string>
     <string name="text_Unknown">未知</string>
-    <string name="text_temp_Unknown_show">__</string>
+    <string name="text_temp_Unknown_show">N°</string>
 
     <string name="cp_search_hint_text">城市中文名或拼音</string>
     <string name="cp_cancel">取消</string>

@@ -293,7 +293,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 
 		    }
 
-		    dbManager = new GreenDaoOptions(getActivity());
+		    dbManager = new GreenDaoOptions();
 		    mAllCities = dbManager.queryAlCity();
 		    mAllCities.add(0, new HotCity(0L,
 				"热门城市",
@@ -312,17 +312,14 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
 	  public void onStart() {
 		    super.onStart();
 		    Dialog dialog = getDialog();
-		    dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-				@Override
-				public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-					  if (keyCode == KeyEvent.KEYCODE_BACK) {
-						    if (mOnPickListener != null) {
-								mOnPickListener.onCancel();
-						    }
-					  }
-					  return false;
+		    dialog.setOnKeyListener((dialog1, keyCode, event) -> {
+		  if (keyCode == KeyEvent.KEYCODE_BACK) {
+				if (mOnPickListener != null) {
+						mOnPickListener.onCancel();
 				}
-		    });
+		  }
+		  return false;
+		});
 
 		    measure();
 		    Window window = dialog.getWindow();
