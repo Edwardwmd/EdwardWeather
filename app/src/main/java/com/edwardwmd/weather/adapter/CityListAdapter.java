@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edwardwmd.weather.R;
-import com.edwardwmd.weather.bean.City;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.HotCity;
 import com.edwardwmd.weather.weight.citypickview.InnerListener;
 import com.edwardwmd.weather.weight.citypickview.decoration.GridItemDecoration;
@@ -34,14 +33,14 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 	  private static final int VIEW_TYPE_HOT = 11;
 
 	  private Context mContext;
-	  private List<City> mData;
+	  private List<ChinaCityInfo> mData;
 	  private List<HotCity> mHotData;
 	  private InnerListener mInnerListener;
 	  private LinearLayoutManager mLayoutManager;
 	  private boolean stateChanged;
 
 
-	  public CityListAdapter(Context context, List<City> data, List<HotCity> hotData) {
+	  public CityListAdapter(Context context, List<ChinaCityInfo> data, List<HotCity> hotData) {
 
 		    this.mData = data;
 		    this.mContext = context;
@@ -54,7 +53,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 	  }
 
 
-	  public void updateData(List<City> data) {
+	  public void updateData(List<ChinaCityInfo> data) {
 		    this.mData = data;
 		    notifyDataSetChanged();
 	  }
@@ -119,9 +118,9 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 	  public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
 		    if (holder instanceof DefaultViewHolder) {
 				final int pos = holder.getAdapterPosition();
-				final City data = mData.get(pos);
+				final ChinaCityInfo data = mData.get(pos);
 				if (data == null) return;
-				((DefaultViewHolder) holder).name.setText(data.getName());
+				((DefaultViewHolder) holder).name.setText(data.getCity_CN());
 				((DefaultViewHolder) holder).name.setOnClickListener(new View.OnClickListener() {
 					  @Override
 					  public void onClick(View v) {
@@ -136,7 +135,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 
 		    if (holder instanceof HotViewHolder) {
 				final int pos = holder.getAdapterPosition();
-				final City data = mData.get(pos);
+				final ChinaCityInfo data = mData.get(pos);
 				if (data == null) return;
 				GridListAdapter mAdapter = new GridListAdapter(mContext, mHotData);
 				mAdapter.setInnerListener(mInnerListener);

@@ -21,7 +21,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/DefaultCityPickerTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.activity.AddCityActivity"></activity>
         <activity
@@ -37,7 +37,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenLayout|keyboardHidden"
-            android:launchMode="singleTask" android:theme="@style/DefaultCityPickerTheme"/>
+            android:launchMode="singleTask" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

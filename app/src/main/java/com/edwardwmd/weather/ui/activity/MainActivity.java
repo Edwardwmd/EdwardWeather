@@ -1,7 +1,6 @@
 package com.edwardwmd.weather.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,7 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BaseMVPActivity;
-import com.edwardwmd.weather.bean.City;
 import com.edwardwmd.weather.bean.TopWeather;
 import com.edwardwmd.weather.mvp.contract.MainContract;
 import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
@@ -26,8 +24,6 @@ import com.edwardwmd.weather.ui.fragment.MainFragment;
 import com.edwardwmd.weather.utils.DateUtils;
 import com.edwardwmd.weather.utils.StringUtils;
 import com.edwardwmd.weather.utils.ToastUtils;
-import com.edwardwmd.weather.weight.citypickview.CityPicker;
-import com.edwardwmd.weather.weight.citypickview.OnPickListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -187,7 +183,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
 	  @Subscribe(threadMode = ThreadMode.MAIN)
 	  public void omGetSearchCityData(AddCityMessage city) {
-		    ToastUtils.showToast_S("---->当前城市： " + city.city.getName());
+		    ToastUtils.showToast_S("---->当前城市： " + city.city.getCity_CN());
 		    mPresenter.addSearchCity(city.city);
 
 	  }

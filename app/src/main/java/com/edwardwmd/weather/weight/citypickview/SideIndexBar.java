@@ -1,7 +1,6 @@
 package com.edwardwmd.weather.weight.citypickview;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -19,14 +18,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * @Author: Bro0cL
+ * @Date: 2018/2/8 10:56
+ */
 public class SideIndexBar extends View {
-    private static final String[] DEFAULT_INDEX_ITEMS = {"热门", "A", "B", "C", "D", "E", "F", "G", "H",
+    private static final String[] DEFAULT_INDEX_ITEMS = {"热门","A", "B", "C", "D", "E", "F", "G", "H",
             "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"};
 
     private List<String> mIndexItems;
     private float mItemHeight; //每个index的高度
-    protected int mTextTouchedColor;
+    private int mTextSize;      //sp
+    private int mTextColor;
+    private int mTextTouchedColor;
     private int mCurrentIndex = -1;
 
     private Paint mPaint;
@@ -61,27 +65,24 @@ public class SideIndexBar extends View {
     private void init(Context context) {
         mIndexItems = new ArrayList<>();
         mIndexItems.addAll(Arrays.asList(DEFAULT_INDEX_ITEMS));
+
         TypedValue typedValue = new TypedValue();
-        if (typedValue!=null){
-            context.getTheme().resolveAttribute(R.attr.cpIndexBarTextSize, typedValue, true);
-            //sp
-            int mTextSize = context.getResources().getDimensionPixelSize(typedValue.resourceId);
+        context.getTheme().resolveAttribute(R.attr.cpIndexBarTextSize, typedValue, true);
+        mTextSize = context.getResources().getDimensionPixelSize(typedValue.resourceId);
 
-            context.getTheme().resolveAttribute(R.attr.cpIndexBarNormalTextColor, typedValue, true);
-            int mTextColor = context.getResources().getColor(typedValue.resourceId);
+        context.getTheme().resolveAttribute(R.attr.cpIndexBarNormalTextColor, typedValue, true);
+        mTextColor = context.getResources().getColor(typedValue.resourceId);
 
-            context.getTheme().resolveAttribute(R.attr.cpIndexBarSelectedTextColor, typedValue, true);
-            mTextTouchedColor = context.getResources().getColor(typedValue.resourceId);
+        context.getTheme().resolveAttribute(R.attr.cpIndexBarSelectedTextColor, typedValue, true);
+        mTextTouchedColor = context.getResources().getColor(typedValue.resourceId);
 
-            mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mPaint.setTextSize(mTextSize);
-            mPaint.setColor(mTextColor);
-            mTouchedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mTouchedPaint.setTextSize(mTextSize);
-            mTouchedPaint.setColor(mTextTouchedColor);
-        }
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setTextSize(mTextSize);
+        mPaint.setColor(mTextColor);
 
-
+        mTouchedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTouchedPaint.setTextSize(mTextSize);
+        mTouchedPaint.setColor(mTextTouchedColor);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class SideIndexBar extends View {
             Paint.FontMetrics fm = mPaint.getFontMetrics();
             canvas.drawText(index,
                     (mWidth - mPaint.measureText(index)) / 2,
-                    (2f*mItemHeight) / 2 + (fm.bottom-fm.top) / 2 - fm.bottom + mItemHeight * i + mTopMargin,
+                    mItemHeight / 2 + (fm.bottom-fm.top) / 2 - fm.bottom + mItemHeight * i + mTopMargin,
                     i == mCurrentIndex ? mTouchedPaint : mPaint);
         }
     }

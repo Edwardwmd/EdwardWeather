@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-
 import android.text.TextPaint;
 import android.util.TypedValue;
 import android.view.View;
@@ -13,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edwardwmd.weather.R;
-import com.edwardwmd.weather.bean.City;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 
 import java.util.List;
 
 
 public class SectionItemDecoration extends RecyclerView.ItemDecoration {
-    private List<City> mData;
+    private List<ChinaCityInfo> mData;
     private Paint mBgPaint;
     private TextPaint mTextPaint;
     private Rect mBounds;
@@ -29,7 +28,7 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
     private int mTextColor;
     private int mTextSize;
 
-    public SectionItemDecoration(Context context, List<City> data) {
+    public SectionItemDecoration(Context context, List<ChinaCityInfo> data) {
         this.mData = data;
         TypedValue typedValue = new TypedValue();
 
@@ -55,7 +54,7 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
         mBounds = new Rect();
     }
 
-    public void setData(List<City> data) {
+    public void setData(List<ChinaCityInfo> data) {
         this.mData = data;
     }
 
@@ -70,7 +69,7 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                     .getLayoutParams();
             int position = params.getViewLayoutPosition();
-            if (mData != null && !mData.isEmpty() && position <= mData.size()-1 && position > -1) {
+            if (mData != null && !mData.isEmpty() && position <= mData.size() - 1 && position > -1) {
                 if (position == 0) {
                     drawSection(c, left, right, child, params, position);
                 } else {

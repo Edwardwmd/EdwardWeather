@@ -1,7 +1,5 @@
 package com.edwardwmd.weather.mvp.presenter;
 
-import android.os.Looper;
-import android.util.Log;
 
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.LocationManager;
@@ -12,13 +10,10 @@ import com.edwardwmd.weather.bean.LifeIdexBean;
 import com.edwardwmd.weather.bean.WeatherDetailBean;
 import com.edwardwmd.weather.mvp.contract.MainDetailContract;
 import com.edwardwmd.weather.utils.StringUtils;
-import com.edwardwmd.weather.utils.ThreadUtils;
-import com.google.gson.Gson;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -52,7 +47,6 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 		    if (!isAttachView()) {
 				return;
 		    }
-
 		    HeWeather.getWeatherNow(EdWeatherApp.getAppContext(), locationManager.getLon() + "," + locationManager.getLat(), new HeWeather.OnResultWeatherNowBeanListener() {
 				@Override
 				public void onError(Throwable throwable) {
@@ -83,7 +77,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 						    for (ForecastBase forecastBase : forecast.getDaily_forecast()) {
 								getForcastBean(forecastWeatherBeans, forecastBase);
 						    }
-						    mView.showForecastWeather(forecastWeatherBeans);
+
 					  }
 				}
 		    });
@@ -102,7 +96,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 						    for (LifestyleBase lifestyleBase : list.get(0).getLifestyle()) {
 								lifeIdexData(lifeIdexBeans, lifestyleBase);
 						    }
-						    mView.showLifeIndex(lifeIdexBeans);
+
 
 					  }
 				}
@@ -293,8 +287,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 					  fb.getTmp_max() + StringUtils.getString(R.string.temp_unit),
 					  fb.getSr(), fb.getSs()));
 		    }
-
-
+		    mView.showForecastWeather(forecastWeatherBeans);
 	  }
 
 
@@ -316,8 +309,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 		    } else if ("air".equals(lifestyles.getType())) {
 				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_908, "污染扩散指数", lifestyles.getBrf()));
 		    }
-
-
+		    mView.showLifeIndex(lifeIdexBeans);
 	  }
 
 

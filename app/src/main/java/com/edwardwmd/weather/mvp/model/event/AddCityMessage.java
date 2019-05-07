@@ -1,18 +1,18 @@
 package com.edwardwmd.weather.mvp.model.event;
 
-import com.edwardwmd.weather.bean.City;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 
 public class AddCityMessage {
 
-	  public final City city;
+	  public final ChinaCityInfo city;
 
 
-	  public static AddCityMessage getInstance(City city) {
+	  public static AddCityMessage getInstance(ChinaCityInfo city) {
 		    return new AddCityMessage(city);
 	  }
 
 
-	  private AddCityMessage(City city) {
+	  private AddCityMessage(ChinaCityInfo city) {
 		    this.city = city;
 	  }
 

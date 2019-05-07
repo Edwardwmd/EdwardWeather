@@ -13,6 +13,10 @@ import com.edwardwmd.weather.bean.HotCity;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+/**
+ * @Author: Bro0cL
+ * @Date: 2018/2/6 17:52
+ */
 public class CityPicker {
     private static final String TAG = "CityPicker";
 
@@ -22,6 +26,7 @@ public class CityPicker {
 
     private boolean enableAnim;
     private int mAnimStyle;
+//    private LocatedCity mLocation;
     private List<HotCity> mHotCities;
     private OnPickListener mOnPickListener;
 
@@ -53,13 +58,22 @@ public class CityPicker {
     /**
      * 设置动画效果
      * @param animStyle
-     * @return CityPicker
+     * @return
      */
     public CityPicker setAnimationStyle(@StyleRes int animStyle) {
         this.mAnimStyle = animStyle;
         return this;
     }
 
+//    /**
+//     * 设置当前已经定位的城市
+//     * @param location
+//     * @return
+//     */
+//    public CityPicker setLocatedCity(LocatedCity location) {
+//        this.mLocation = location;
+//        return this;
+//    }
 
     public CityPicker setHotCities(List<HotCity> data){
         this.mHotCities = data;
@@ -69,7 +83,7 @@ public class CityPicker {
     /**
      * 启用动画效果，默认为false
      * @param enable
-     * @return CityPicker
+     * @return
      */
     public CityPicker enableAnimation(boolean enable){
         this.enableAnim = enable;
@@ -79,7 +93,7 @@ public class CityPicker {
     /**
      * 设置选择结果的监听器
      * @param listener
-     * @return CityPicker
+     * @return
      */
     public CityPicker setOnPickListener(OnPickListener listener){
         this.mOnPickListener = listener;
@@ -96,11 +110,22 @@ public class CityPicker {
         ft.addToBackStack(null);
         final CityPickerDialogFragment cityPickerFragment =
                 CityPickerDialogFragment.newInstance(enableAnim);
+//        cityPickerFragment.setLocatedCity(mLocation);
         cityPickerFragment.setHotCities(mHotCities);
         cityPickerFragment.setAnimationStyle(mAnimStyle);
         cityPickerFragment.setOnPickListener(mOnPickListener);
         cityPickerFragment.show(ft, TAG);
     }
 
-
+    /**
+     * 定位完成
+     * @param location
+     * @param state
+     */
+//    public void locateComplete(LocatedCity location, @LocateState.State int state){
+//        CityPickerDialogFragment fragment = (CityPickerDialogFragment) mFragmentManager.get().findFragmentByTag(TAG);
+//        if (fragment != null){
+//            fragment.locationChanged(location, state);
+//        }
+//    }
 }

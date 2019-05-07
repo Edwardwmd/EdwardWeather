@@ -2,7 +2,6 @@ package com.edwardwmd.weather.mvp.presenter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -10,14 +9,12 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.edwardwmd.weather.EdWeatherApp;
-import com.edwardwmd.weather.LocationManager;
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BasePresenter;
-import com.edwardwmd.weather.bean.City;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.TopWeather;
 import com.edwardwmd.weather.mvp.contract.MainContract;
 import com.edwardwmd.weather.utils.ToastUtils;
-import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -27,14 +24,19 @@ import interfaces.heweather.com.interfacesmodule.bean.weather.Weather;
 import interfaces.heweather.com.interfacesmodule.bean.weather.now.NowBase;
 import interfaces.heweather.com.interfacesmodule.view.HeWeather;
 
+import static com.edwardwmd.weather.utils.ConstantUtils.NOW_LAT;
+import static com.edwardwmd.weather.utils.ConstantUtils.NOW_LON;
+
 public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
 
 
 	  private boolean isFirstSearch = false;
-	  private City city;
+	  //	  private ChinaCityInfo city;
 	  //声明AMapLocationClient类对象
 	  private AMapLocationClient mLocationClient = null;
 	  private Weather weather;
+	  private Double mLon= NOW_LON;
+	  private Double mLat=NOW_LAT;
 
 
 	  @Inject
@@ -48,17 +50,18 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 				initLocation();
 
 		    } else {
-				if (city == null)
-					  return;
-				initWeather(null, null, city);
+				initWeather(mLon, mLat);
 		    }
 
 	  }
 
 
 	  @Override
-	  public void addSearchCity(City city) {
-		    initWeather(null, null, city);
+	  public void addSearchCity(ChinaCityInfo city) {
+		    isFirstSearch = true;
+		    mLon = city.getLongitude();
+		    mLat = city.getLatitude();
+		    initWeather(mLon, mLat);
 	  }
 
 
@@ -67,7 +70,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 		    if (aMapLocation.getErrorCode() == 0) {
 				Double lon = aMapLocation.getLongitude();
 				Double lat = aMapLocation.getLatitude();
-				initWeather(lon, lat, null);
+				initWeather(lon, lat);
 				mLocationClient.onDestroy();
 		    } else {
 				if (ContextCompat.checkSelfPermission(EdWeatherApp.getAppContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -82,7 +85,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 	  };
 
 
-	  private void initWeather(Double lon, Double lat, City city) {
+	  private void initWeather(Double lon, Double lat) {
 		    if (!isAttachView()) {
 				return;
 		    }
@@ -109,41 +112,8 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 									  mView.hideLoading();
 								}
 						    }
-
-
 					  });
 		    }
-
-		    if (city != null) {
-				isFirstSearch = true;
-				this.city = city;
-				mView.showLoading();
-				HeWeather.getWeather(EdWeatherApp.getAppContext(),
-					  city.getName(), new HeWeather.OnResultWeatherDataListBeansListener() {
-						    @Override
-						    public void onError(Throwable throwable) {
-								mView.showErrorMsg(throwable.getMessage());
-								mView.hideLoading();
-
-						    }
-
-
-						    @Override
-						    public void onSuccess(List<Weather> list) {
-								if (list != null && list.size() > 0) {
-									  weather = list.get(0);
-									  addTopWeather(weather);
-									  mView.hideLoading();
-								} else {
-									  mView.showErrorMsg("数据未加载，请检查你的网络！>_<");
-									  mView.hideLoading();
-								}
-						    }
-
-
-					  });
-		    }
-
 
 	  }
 

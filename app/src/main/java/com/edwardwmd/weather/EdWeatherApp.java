@@ -8,6 +8,7 @@ import android.util.Log;
 import com.edwardwmd.weather.di.component.AppComponent;
 import com.edwardwmd.weather.di.component.DaggerAppComponent;
 import com.edwardwmd.weather.di.module.AppModule;
+import com.edwardwmd.weather.mvp.model.data.DaoManager;
 
 
 import java.util.HashSet;
@@ -35,7 +36,7 @@ public class EdWeatherApp extends Application {
 		    HeConfig.init(APK_USERNAME, APK_KEY);
 		    HeConfig.switchToFreeServerNode();
 		    //初始化数据库
-//		    DaoManager.getInstance().copyDbFile(instance, DB_NAME);
+		    DaoManager.getInstance().copyDbFile(instance, DB_NAME);
 
 
 	  }

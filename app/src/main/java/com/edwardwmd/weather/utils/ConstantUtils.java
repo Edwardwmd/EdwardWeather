@@ -11,8 +11,8 @@ public class ConstantUtils {
 	  public final static long LONG_TIME = 1500;
 
 	  //默认经纬度
-	  public static Double NOW_LON = 112.57;
-	  public static Double NOW_LAT = 22.26;
+	  public static Double NOW_LON = 113.28064;
+	  public static Double NOW_LAT = 23.125177;
 
 	  //数据库表Flag
 	  public final static int ALL_CITY_POSITION = 1;

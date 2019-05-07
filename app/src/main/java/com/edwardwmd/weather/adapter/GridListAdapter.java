@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.edwardwmd.weather.R;
-import com.edwardwmd.weather.bean.City;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.HotCity;
 import com.edwardwmd.weather.weight.citypickview.InnerListener;
 
@@ -43,7 +43,7 @@ public class GridListAdapter extends RecyclerView.Adapter<GridListAdapter.GridVi
     @Override
     public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
         final int pos = holder.getAdapterPosition();
-        final City data = mData.get(pos);
+        final ChinaCityInfo data = mData.get(pos);
         if (data == null) return;
         //设置item宽高
         DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
@@ -59,7 +59,7 @@ public class GridListAdapter extends RecyclerView.Adapter<GridListAdapter.GridVi
         lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         holder.container.setLayoutParams(lp);
 
-        holder.name.setText(data.getName());
+        holder.name.setText(data.getCity_CN());
         holder.container.setOnClickListener(v -> {
             if (mInnerListener != null){
                 mInnerListener.dismiss(pos, data);

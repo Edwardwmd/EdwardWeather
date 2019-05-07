@@ -21,6 +21,7 @@ import com.edwardwmd.weather.bean.ForecastWeatherBean;
 import com.edwardwmd.weather.bean.LifeIdexBean;
 import com.edwardwmd.weather.bean.WeatherDetailBean;
 import com.edwardwmd.weather.mvp.contract.MainDetailContract;
+import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainDetailPresenter;
 import com.edwardwmd.weather.utils.StringUtils;
@@ -208,6 +209,7 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 				mPresenter.startLoad();
 
 	  }
+
 
 
 }

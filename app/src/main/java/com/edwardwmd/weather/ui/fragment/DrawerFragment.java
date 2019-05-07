@@ -1,6 +1,5 @@
 package com.edwardwmd.weather.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,11 +7,9 @@ import android.widget.TextView;
 
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BaseFragment;
-import com.edwardwmd.weather.bean.City;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
-import com.edwardwmd.weather.ui.activity.AddCityActivity;
 import com.edwardwmd.weather.ui.activity.MainActivity;
-import com.edwardwmd.weather.utils.ToastUtils;
 import com.edwardwmd.weather.weight.citypickview.CityPicker;
 import com.edwardwmd.weather.weight.citypickview.OnPickListener;
 
@@ -65,19 +62,14 @@ public class DrawerFragment extends BaseFragment {
 	  public void onViewClicked(View view) {
 		    switch (view.getId()) {
 				case R.id.add_city_btn:
-//					 getActivity().startActivity(new Intent(getActivity(), AddCityActivity.class));
-//					  getActivity().finish();
-
 					  CityPicker.from(this)
 						    .enableAnimation(true)
 						    .setAnimationStyle(R.style.CustomAnim)
 						    .setOnPickListener(new OnPickListener() {
 								@Override
-								public void onPick(int position, City data) {
+								public void onPick(int position, ChinaCityInfo data) {
 									  ((MainActivity) Objects.requireNonNull(getActivity())).drawerLayout.closeDrawers();
 									  EventBus.getDefault().post(AddCityMessage.getInstance(data));
-
-
 								}
 
 
