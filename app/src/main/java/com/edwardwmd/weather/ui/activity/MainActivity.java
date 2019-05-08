@@ -1,13 +1,19 @@
 package com.edwardwmd.weather.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -15,16 +21,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BaseMVPActivity;
+import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.TopWeather;
 import com.edwardwmd.weather.mvp.contract.MainContract;
+import com.edwardwmd.weather.mvp.model.GPSModeGetDataMessage;
 import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainPresenter;
 import com.edwardwmd.weather.ui.fragment.DrawerFragment;
 import com.edwardwmd.weather.ui.fragment.MainFragment;
 import com.edwardwmd.weather.utils.DateUtils;
+import com.edwardwmd.weather.utils.LocationUtils;
 import com.edwardwmd.weather.utils.StringUtils;
 import com.edwardwmd.weather.utils.ToastUtils;
+import com.edwardwmd.weather.weight.citypickview.CityPicker;
+import com.edwardwmd.weather.weight.citypickview.OnPickListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -67,6 +78,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 	  @BindView(R.id.drawer_layout)
 	  public DrawerLayout drawerLayout;
 
+	  private int GPS_REQUEST_CODE = 10;
+
 
 	  @Override
 	  protected int initLayout() {
@@ -94,9 +107,30 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 		    //添加Fragment
 		    popToFragment();
 		    //初始化天气数据
-		    mPresenter.initTopPageWeather();
+
+		    if (LocationUtils.isLocationEnabled()) {
+				mPresenter.initTopPageWeather();
+		    } else {
+				setGPSModeDailog();
+
+		    }
+
+	  }
 
 
+	  @Override
+	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		    super.onActivityResult(requestCode, resultCode, data);
+		    if (requestCode == GPS_REQUEST_CODE) {
+				//获取定位后重新加载定位数据
+				if (LocationUtils.isLocationEnabled()) {
+					  mPresenter.initTopPageWeather();
+					  EventBus.getDefault().post(GPSModeGetDataMessage.getInstance("GPS_MODE_OPEN"));
+				} else {
+					  setGPSModeDailog();
+				}
+
+		    }
 	  }
 
 
@@ -150,7 +184,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 		    tvUpdateDate.setText(StringUtils.getString(R.string.update_by_text) + DateUtils.getCurrentSystemDate());
 		    imgWeatherShow.setImageResource(topWeather.getIconResource());
 		    tvWeatherInfo.setText(topWeather.getWeatherText());
-		    tvTemp.setText(topWeather.getTep_value()+"°");
+		    tvTemp.setText(topWeather.getTep_value() + "°");
 		    edCollapsingToolbar.setTitle(topWeather.getAddress());
 
 	  }
@@ -188,6 +222,47 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 		    Log.i("Search City", "Data is: " + city.city.getCity_CN());
 		    mPresenter.addSearchCity(city.city);
 
+	  }
+
+
+	  private void setGPSModeDailog() {
+		    //没有开启GPS模式打开则弹出对话框
+		    new AlertDialog
+				.Builder(this)
+				.setIcon(R.drawable.ic_location_logo)
+				.setTitle(R.string.notifyTitle)
+				.setMessage(R.string.gpsNotifyMsg)
+				//取消直接进入城市搜索
+				.setNegativeButton(R.string.cancel, (dialog, which) -> popToSearchCityDialog())
+				//跳转GPS设置界面，对GPS定位开关进行设置
+				.setPositiveButton(R.string.setting, (dialog, which) -> {
+					  Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					  startActivityForResult(intent, GPS_REQUEST_CODE);
+				})
+				.setCancelable(false)
+				.show();
+	  }
+
+
+	  private void popToSearchCityDialog() {
+
+		    CityPicker.from(this)
+				.enableAnimation(true)
+				.setOnPickListener(new OnPickListener() {
+					  @Override
+					  public void onPick(int position, ChinaCityInfo data) {
+
+						    EventBus.getDefault().post(AddCityMessage.getInstance(data));
+					  }
+
+
+					  @Override
+					  public void onCancel() {
+
+					  }
+				})
+				.setAnimationStyle(R.style.PDAnim)
+				.show();
 	  }
 
 

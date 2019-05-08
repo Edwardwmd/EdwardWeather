@@ -1,5 +1,9 @@
 package com.edwardwmd.weather.utils;
 
+import android.os.Build;
+import android.provider.Settings;
+import android.text.TextUtils;
+
 import com.edwardwmd.weather.EdWeatherApp;
 import com.edwardwmd.weather.ui.fragment.MainFragment;
 
@@ -29,7 +33,6 @@ public class ConstantUtils {
 
 	  public final static String MAIN_FRAGMENT_KEYS = MainFragment.class.getSimpleName();
 	  public final static String START_REFRESH = "start_refresh_and_loading_data_for_main";
-
 
 
 

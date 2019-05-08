@@ -21,9 +21,11 @@ import com.edwardwmd.weather.bean.ForecastWeatherBean;
 import com.edwardwmd.weather.bean.LifeIdexBean;
 import com.edwardwmd.weather.bean.WeatherDetailBean;
 import com.edwardwmd.weather.mvp.contract.MainDetailContract;
+import com.edwardwmd.weather.mvp.model.GPSModeGetDataMessage;
 import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainDetailPresenter;
+import com.edwardwmd.weather.utils.LocationUtils;
 import com.edwardwmd.weather.weight.sunrisesunsetview.SunriseSunsetView;
 import com.edwardwmd.weather.weight.sunrisesunsetview.Timer;
 import com.edwardwmd.weather.weight.sunrisesunsetview.formatter.SunriseSunsetLabelFormatter;
@@ -143,7 +145,10 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 	  @Override
 	  protected void initData() {
 		    super.initData();
-		    mPresenter.initDetailWeather();
+		    if (LocationUtils.isLocationEnabled()) {
+				mPresenter.initDetailWeather();
+		    }
+
 
 	  }
 
@@ -156,7 +161,6 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 	  @Override
 	  public void showLoading() {
-		    Log.i("mainfragment", "刷新数据了！！！！！！！！！！");
 		    mPresenter.initDetailWeather();
 		    clearData();
 	  }
@@ -201,6 +205,11 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 	  }
 
 
+	  /**
+	   * 下拉刷新重新加载数据
+	   *
+	   * @param mainMessage
+	   */
 	  @Subscribe(threadMode = ThreadMode.MAIN)
 	  public void onGetMessage(MainMessage mainMessage) {
 		    if (START_REFRESH.equals(mainMessage.message))
@@ -209,8 +218,13 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 	  }
 
 
+	  /**
+	   * 城市搜索数据
+	   *
+	   * @param city
+	   */
 	  @Subscribe(threadMode = ThreadMode.MAIN)
-	  public void omGetSearchCityData(AddCityMessage city) {
+	  public void onGetSearchCityData(AddCityMessage city) {
 		    Log.i("Search City", "Data is: " + city.city.getCity_CN());
 		    mPresenter.addSearchCity(city.city);
 		    clearData();
@@ -218,6 +232,21 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 	  }
 
 
+	  /**
+	   * 是否在GPS打开下进行加载数据
+	   *
+	   * @param gpsModeGetDataMessage
+	   */
+	  @Subscribe(threadMode = ThreadMode.MAIN)
+	  public void onAfterGpsModeGetData(GPSModeGetDataMessage gpsModeGetDataMessage) {
+		    mPresenter.initDetailWeather();
+
+	  }
+
+
+	  /**
+	   * 清楚Adapter list数据
+	   */
 	  private void clearData() {
 		    fAdapter.dataClear();
 		    dAdapter.dataClear();
