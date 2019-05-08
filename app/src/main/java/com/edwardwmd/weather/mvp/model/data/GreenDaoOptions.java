@@ -1,6 +1,5 @@
 package com.edwardwmd.weather.mvp.model.data;
 
-import android.content.Context;
 
 
 import com.edwardwmd.weather.EdWeatherApp;
@@ -93,6 +92,10 @@ public class GreenDaoOptions {
 		    return searchResult;
 	  }
 
+
+	  /**
+	   * 字母排序（A-Z）
+	   */
 	  private class CityComparator implements Comparator<ChinaCityInfo> {
 		    @Override
 		    public int compare(ChinaCityInfo lhs, ChinaCityInfo rhs) {

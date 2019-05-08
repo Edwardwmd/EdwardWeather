@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.edwardwmd.weather.bean.HotCity;
+import com.edwardwmd.weather.ui.fragment.PickCityFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -94,12 +95,13 @@ public class CityPicker {
             ft = mFragmentManager.get().beginTransaction();
         }
         ft.addToBackStack(null);
-        final CityPickerDialogFragment cityPickerFragment =
-                CityPickerDialogFragment.newInstance(enableAnim);
-        cityPickerFragment.setHotCities(mHotCities);
-        cityPickerFragment.setAnimationStyle(mAnimStyle);
-        cityPickerFragment.setOnPickListener(mOnPickListener);
-        cityPickerFragment.show(ft, TAG);
+
+        final PickCityFragment pickCityFragment=PickCityFragment.newInstance(enableAnim);
+        pickCityFragment.setHotCities(mHotCities);
+        pickCityFragment.setAnimationStyle(mAnimStyle);
+        pickCityFragment.setOnPickListener(mOnPickListener);
+        pickCityFragment.show(ft,TAG);
+
     }
 
 }

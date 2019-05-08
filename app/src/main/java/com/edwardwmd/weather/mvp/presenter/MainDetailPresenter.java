@@ -10,7 +10,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.edwardwmd.weather.EdWeatherApp;
-import com.edwardwmd.weather.LocationManager;
 import com.edwardwmd.weather.R;
 import com.edwardwmd.weather.base.BasePresenter;
 import com.edwardwmd.weather.bean.ChinaCityInfo;

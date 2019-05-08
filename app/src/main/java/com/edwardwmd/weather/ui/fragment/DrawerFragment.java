@@ -1,6 +1,7 @@
 package com.edwardwmd.weather.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -71,7 +72,7 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 	  public void onViewClicked(View view) {
 		    switch (view.getId()) {
 				case R.id.add_city_btn:
-					  ((MainActivity) Objects.requireNonNull(getActivity())).drawerLayout.closeDrawers();
+
 
 					  CityPicker.from(this)
 						    .enableAnimation(true)
@@ -86,11 +87,12 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 								@Override
 								public void onCancel() {
 
-
 								}
 						    })
 						    .setAnimationStyle(R.style.PDAnim)
 						    .show();
+					  ((MainActivity) Objects.requireNonNull(getActivity())).drawerLayout.closeDrawers();
+
 					  break;
 
 				case R.id.tv_setting:

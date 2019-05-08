@@ -90,7 +90,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 
 
 	  public void refreshHotCityItem() {
-		    //如果定位城市的item可见则进行刷新
+		    //如果热门城市的item可见则进行刷新
 		    if (stateChanged && mLayoutManager.findFirstVisibleItemPosition() == 0) {
 				stateChanged = false;
 				notifyItemChanged(0);

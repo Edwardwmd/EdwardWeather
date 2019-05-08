@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -29,19 +30,22 @@ public abstract class BaseFragment extends Fragment {
 
 
 	  @Override
-	  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		    super.onActivityCreated(savedInstanceState);
-
+	  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		    super.onViewCreated(view, savedInstanceState);
+		    initData();
 	  }
 
 
 	  @Override
-	  public void onDestroy() {
-		    super.onDestroy();
+	  public void onDestroyView() {
+		    super.onDestroyView();
 		    if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
 				mUnbinder.unbind();
 		    this.mUnbinder = null;
+	  }
 
+
+	  protected void initData() {
 	  }
 
 

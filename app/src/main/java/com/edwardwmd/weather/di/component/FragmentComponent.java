@@ -6,6 +6,7 @@ import com.edwardwmd.weather.di.module.FragmentModule;
 import com.edwardwmd.weather.di.scope.FragmentScope;
 import com.edwardwmd.weather.ui.fragment.DrawerFragment;
 import com.edwardwmd.weather.ui.fragment.MainFragment;
+import com.edwardwmd.weather.ui.fragment.PickCityFragment;
 
 import dagger.Component;
 
@@ -19,6 +20,8 @@ public interface FragmentComponent {
 	  void inject(MainFragment mainFragment);
 
 	  void inject(DrawerFragment mainFragment);
+
+	  void inject(PickCityFragment pickCityFragment);
 
 
 }

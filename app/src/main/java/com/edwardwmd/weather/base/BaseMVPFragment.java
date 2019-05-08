@@ -46,11 +46,7 @@ public abstract class BaseMVPFragment< P extends BasePresenter> extends BaseFrag
 	  }
 
 
-	  @Override
-	  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		    super.onActivityCreated(savedInstanceState);
-		    initData();
-	  }
+
 
 
 	  @Override
@@ -68,8 +64,7 @@ public abstract class BaseMVPFragment< P extends BasePresenter> extends BaseFrag
 	  }
 
 
-	  protected void initData() {
-	  }
+
 
 
 	  protected abstract void initInject();

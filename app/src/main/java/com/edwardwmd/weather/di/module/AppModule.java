@@ -2,7 +2,6 @@ package com.edwardwmd.weather.di.module;
 
 
 import com.edwardwmd.weather.EdWeatherApp;
-import com.edwardwmd.weather.LocationManager;
 import com.edwardwmd.weather.mvp.model.data.GreenDaoOptions;
 
 import javax.inject.Singleton;
