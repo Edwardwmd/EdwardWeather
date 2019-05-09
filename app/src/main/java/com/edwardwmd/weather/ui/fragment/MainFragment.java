@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -26,6 +28,8 @@ import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainDetailPresenter;
 import com.edwardwmd.weather.utils.LocationUtils;
+import com.edwardwmd.weather.utils.SnackbarUtil;
+import com.edwardwmd.weather.utils.ToastUtils;
 import com.edwardwmd.weather.weight.sunrisesunsetview.SunriseSunsetView;
 import com.edwardwmd.weather.weight.sunrisesunsetview.Timer;
 import com.edwardwmd.weather.weight.sunrisesunsetview.formatter.SunriseSunsetLabelFormatter;
@@ -43,7 +47,7 @@ import butterknife.BindView;
 import static com.edwardwmd.weather.utils.ConstantUtils.START_REFRESH;
 
 
-public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implements MainDetailContract.View {
+public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implements MainDetailContract.View, AdapterView.OnItemClickListener {
 
 
 	  @BindView(R.id.detail_title)
@@ -99,6 +103,7 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 		    dAdapter = new WeatherDetailAdapter(getActivity());
 		    fAdapter = new ForecastAdapter(getActivity());
 		    iAdapter = new LifeIndexAdapter(getActivity());
+		    iAdapter.setOnItemClickListener(this);
 		    detailRecyclerView.setHasFixedSize(true);
 		    forecastRecyclerView.setHasFixedSize(true);
 		    lifeIndexRecyclerView.setHasFixedSize(true);
@@ -245,12 +250,20 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 
 
 	  /**
-	   * 清楚Adapter list数据
+	   * 清除Adapter list数据
 	   */
 	  private void clearData() {
 		    fAdapter.dataClear();
 		    dAdapter.dataClear();
 		    iAdapter.dataClear();
+	  }
+
+
+	  @Override
+	  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		    LifeIdexBean lifeIdexBean = iAdapter.getLifeIdexBeans().get(position);
+		    ToastUtils.showToast_S(lifeIdexBean.getLifeDetailText());
+
 	  }
 
 

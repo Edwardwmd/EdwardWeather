@@ -370,21 +370,22 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 
 	  private void lifeIdexData(List<LifeIdexBean> lifeIdexBeans, LifestyleBase lifestyles) {
 		    if ("comf".equals(lifestyles.getType())) {
-				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_910, "舒适度指数", lifestyles.getBrf()));
+		    	  
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_910, "舒适度指数", lifestyles.getBrf(),lifestyles.getTxt()));
 		    } else if ("cw".equals(lifestyles.getType())) {
-				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_902, "洗车指数", lifestyles.getBrf()));
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_902, "洗车指数", lifestyles.getBrf(),lifestyles.getTxt()));
 		    } else if ("drsg".equals(lifestyles.getType())) {
-				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_903, "穿衣指数", lifestyles.getBrf()));
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_903, "穿衣指数", lifestyles.getBrf(),lifestyles.getTxt()));
 		    } else if ("flu".equals(lifestyles.getType())) {
-				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_904, "感冒指数", lifestyles.getBrf()));
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_904, "感冒指数", lifestyles.getBrf(),lifestyles.getTxt()));
 		    } else if ("sport".equals(lifestyles.getType())) {
-				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_905, "运动指数", lifestyles.getBrf()));
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_905, "运动指数", lifestyles.getBrf(),lifestyles.getTxt()));
 		    } else if ("trav".equals(lifestyles.getType())) {
-				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_906, "旅游指数", lifestyles.getBrf()));
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_906, "旅游指数", lifestyles.getBrf(),lifestyles.getTxt()));
 		    } else if ("uv".equals(lifestyles.getType())) {
-				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_907, "紫外线指数", lifestyles.getBrf()));
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_907, "紫外线指数", lifestyles.getBrf(),lifestyles.getTxt()));
 		    } else if ("air".equals(lifestyles.getType())) {
-				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_908, "污染扩散指数", lifestyles.getBrf()));
+				lifeIdexBeans.add(new LifeIdexBean(R.drawable.ic_908, "污染扩散指数", lifestyles.getBrf(),lifestyles.getTxt()));
 		    }
 		    mView.showLifeIndex(lifeIdexBeans);
 	  }

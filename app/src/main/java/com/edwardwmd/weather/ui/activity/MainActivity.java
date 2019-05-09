@@ -1,12 +1,9 @@
 package com.edwardwmd.weather.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;

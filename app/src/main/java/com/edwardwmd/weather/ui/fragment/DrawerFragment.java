@@ -1,5 +1,6 @@
 package com.edwardwmd.weather.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,9 @@ import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.mvp.contract.DrawerContract;
 import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
 import com.edwardwmd.weather.mvp.presenter.DrawerPresenter;
+import com.edwardwmd.weather.ui.activity.AboutActivity;
 import com.edwardwmd.weather.ui.activity.MainActivity;
+import com.edwardwmd.weather.ui.activity.SettingActivity;
 import com.edwardwmd.weather.weight.citypickview.CityPicker;
 import com.edwardwmd.weather.weight.citypickview.OnPickListener;
 
@@ -72,32 +75,18 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 	  public void onViewClicked(View view) {
 		    switch (view.getId()) {
 				case R.id.add_city_btn:
-
-
-					  CityPicker.from(this)
-						    .enableAnimation(true)
-						    .setOnPickListener(new OnPickListener() {
-								@Override
-								public void onPick(int position, ChinaCityInfo data) {
-
-									  EventBus.getDefault().post(AddCityMessage.getInstance(data));
-								}
-
-
-								@Override
-								public void onCancel() {
-
-								}
-						    })
-						    .setAnimationStyle(R.style.PDAnim)
-						    .show();
+					  popToSearchCityDialog();
 					  ((MainActivity) Objects.requireNonNull(getActivity())).drawerLayout.closeDrawers();
 
 					  break;
 
 				case R.id.tv_setting:
+					  getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+					  getActivity().finish();
 					  break;
 				case R.id.tv_about:
+					  getActivity().startActivity(new Intent(getActivity(), AboutActivity.class));
+					  getActivity().finish();
 					  break;
 		    }
 	  }
@@ -106,6 +95,28 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 	  @Override
 	  public void useNightMode(boolean isNight) {
 
+	  }
+
+
+	  private void popToSearchCityDialog() {
+
+		    CityPicker.from(this)
+				.enableAnimation(true)
+				.setOnPickListener(new OnPickListener() {
+					  @Override
+					  public void onPick(int position, ChinaCityInfo data) {
+
+						    EventBus.getDefault().post(AddCityMessage.getInstance(data));
+					  }
+
+
+					  @Override
+					  public void onCancel() {
+
+					  }
+				})
+				.setAnimationStyle(R.style.PDAnim)
+				.show();
 	  }
 
 

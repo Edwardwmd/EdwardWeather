@@ -23,7 +23,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.AddCityActivity"></activity>
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:configChanges="orientation|screenLayout|keyboardHidden"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.activity.SettingActivity"
+            android:configChanges="orientation|screenLayout|keyboardHidden"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.activity.LauncherActivity"
             android:configChanges="orientation|screenLayout|keyboardHidden"

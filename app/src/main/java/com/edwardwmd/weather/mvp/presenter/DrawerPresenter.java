@@ -5,7 +5,6 @@ import android.content.Intent;
 
 import com.edwardwmd.weather.base.BasePresenter;
 import com.edwardwmd.weather.mvp.contract.DrawerContract;
-import com.edwardwmd.weather.ui.activity.AddCityActivity;
 import com.edwardwmd.weather.ui.activity.MainActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -30,21 +29,10 @@ public class DrawerPresenter extends BasePresenter<DrawerContract.View> implemen
 	  }
 
 
-	  @Override
-	  public void turnToSearchCityActivity(Context context) {
-		    addSubscribe(Observable
-				.timer(600, TimeUnit.MILLISECONDS)
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(aLong -> turnToMain(context)));
-
-	  }
 
 
-	  private void turnToMain(Context context) {
-		    context.startActivity(new Intent(context, AddCityActivity.class));
-		    ((MainActivity)context).finish();
-	  }
+
+
 
 
 }

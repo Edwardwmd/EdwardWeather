@@ -34,11 +34,13 @@ public class LifeIndexAdapter extends BaseRecyclerViewAdapter<LifeIndexAdapter.V
 
 
 	  public void setAllLifeIndexData(List<LifeIdexBean> lifeIdexBeans) {
-//		    this.lifeIdexBeans.clear();
 		    this.lifeIdexBeans = lifeIdexBeans;
 		    notifyDataSetChanged();
 	  }
 
+	  public List<LifeIdexBean>getLifeIdexBeans(){
+	  	  return lifeIdexBeans;
+	  }
 
 	  public void dataClear() {
 		    this.lifeIdexBeans.clear();
@@ -84,6 +86,13 @@ public class LifeIndexAdapter extends BaseRecyclerViewAdapter<LifeIndexAdapter.V
 		    ViewHolder(View view, LifeIndexAdapter lifeIndexAdapter) {
 				super(view);
 				ButterKnife.bind(this, view);
+				itemView.setOnClickListener(new View.OnClickListener() {
+					  @Override
+					  public void onClick(View v) {
+						    lifeIndexAdapter.onItemHolderClick(ViewHolder.this);
+					  }
+				});
+
 		    }
 
 

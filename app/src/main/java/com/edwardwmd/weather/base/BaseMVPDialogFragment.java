@@ -29,16 +29,13 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-public abstract class BaseMVPDialogFragment<P extends BasePresenter> extends DialogFragment implements BaseView {
+public abstract class BaseMVPDialogFragment<P extends BasePresenter> extends BaseDialogFragment implements BaseView {
 
 
 	  @Inject
 	  protected P dPresenter;
 
-	  private Unbinder mUnbinder;
 	  private int height;
 	  private int width;
 
@@ -88,30 +85,9 @@ public abstract class BaseMVPDialogFragment<P extends BasePresenter> extends Dia
 	  }
 
 
-	  @Nullable
-	  @Override
-	  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		    View view = inflater.inflate(getLayout(), container, false);
-		    mUnbinder = ButterKnife.bind(this, view);
-		    initView(view);
-		    return view;
-	  }
-
-
-	  @Override
-	  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		    super.onActivityCreated(savedInstanceState);
-		    initData();
-	  }
-
-
 	  @Override
 	  public void onDestroyView() {
 		    super.onDestroyView();
-		    if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
-				mUnbinder.unbind();
-				this.mUnbinder = null;
-		    }
 
 		    if (dPresenter != null) {
 				dPresenter.detachView();
@@ -155,12 +131,7 @@ public abstract class BaseMVPDialogFragment<P extends BasePresenter> extends Dia
 
 	  protected abstract void initInject();
 
-	  protected abstract int getLayout();
 
-
-	  protected void initData() {
-
-	  }
 
 
 }

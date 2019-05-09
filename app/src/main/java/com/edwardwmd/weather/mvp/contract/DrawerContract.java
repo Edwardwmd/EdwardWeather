@@ -28,7 +28,6 @@ public interface DrawerContract {
 
 		    void initDrawerData();
 
-		    void turnToSearchCityActivity(Context context);
 
 
 	  }
