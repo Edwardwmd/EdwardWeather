@@ -1,10 +1,8 @@
 package com.edwardwmd.weather.utils;
 
-import android.os.Build;
-import android.provider.Settings;
-import android.text.TextUtils;
 
 import com.edwardwmd.weather.EdWeatherApp;
+import com.edwardwmd.weather.ui.activity.WebActivity;
 import com.edwardwmd.weather.ui.fragment.MainFragment;
 
 public class ConstantUtils {
@@ -29,11 +27,18 @@ public class ConstantUtils {
 	  //数据库名
 	  public final static String DB_NAME = "city.db";
 	  //数据库文件路径
-	  public static final String DB_PATH = "/data/data/" + EdWeatherApp.getAppContext().getPackageName() + "/databases/";
+	  public final static String DB_PATH = "/data/data/" + EdWeatherApp.getAppContext().getPackageName() + "/databases/";
 
 	  public final static String MAIN_FRAGMENT_KEYS = MainFragment.class.getSimpleName();
 	  public final static String START_REFRESH = "start_refresh_and_loading_data_for_main";
 
+	  public final static String WEBVIEW_KEY= WebActivity.class.getSimpleName();
+
+	  //Github地址
+	  public final static String GITHUB_URL = "https://github.com/Edwardwmd?tab=repositories";
+
+	  //个人博客
+	  public final static String PERSONAL_BLOG_URL="https://www.csdn.net/";
 
 
 }

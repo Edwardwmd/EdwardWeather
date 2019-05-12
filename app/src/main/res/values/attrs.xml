@@ -42,6 +42,13 @@
         <!-- Label horizontal gap -->
         <attr name="ssv_label_horizontal_offset" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="MaterialProgressBar">
+        <attr name="progressColour" format="color" />
+        <attr name="secondaryProgressColour" format="color" />
+        <attr name="backgroundColour" format="color" />
+        <attr name="duration" format="integer" />
+    </declare-styleable>
     <!--城市搜索列表-->
     <attr name="cpCancelTextSize" format="dimension|reference" />
     <attr name="cpCancelTextColor" format="color|reference" />
