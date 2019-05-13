@@ -1,9 +1,11 @@
 package com.edwardwmd.weather.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +23,14 @@ import com.edwardwmd.weather.weight.citypickview.InnerListener;
 import com.edwardwmd.weather.weight.citypickview.decoration.GridItemDecoration;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
-/**
- * @Author: Bro0cL
- * @Date: 2018/2/5 12:06
- */
 public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseViewHolder> {
 
 
@@ -64,6 +68,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 	   *
 	   * @param index
 	   */
+	  @SuppressLint("CheckResult")
 	  public void scrollToSection(String index) {
 		    if (mData == null || mData.isEmpty()) return;
 		    if (TextUtils.isEmpty(index)) return;
@@ -74,13 +79,15 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 						    mLayoutManager.scrollToPositionWithOffset(i, 0);
 						    if (TextUtils.equals(index.substring(0, 1), "热")) {
 								//防止滚动时进行刷新
-								new Handler().postDelayed(new Runnable() {
-									  @Override
-									  public void run() {
-										    if (stateChanged)
-												notifyItemChanged(0);
-									  }
-								}, 1000);
+								Observable
+									  .timer(1000, TimeUnit.MILLISECONDS)
+									  .subscribeOn(Schedulers.io())
+									  .subscribeOn(AndroidSchedulers.mainThread())
+									  .subscribe(aLong -> {
+										  if (stateChanged)
+										    notifyItemChanged(0);
+								  });
+
 						    }
 						    return;
 					  }
@@ -121,12 +128,9 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 				final ChinaCityInfo data = mData.get(pos);
 				if (data == null) return;
 				((DefaultViewHolder) holder).name.setText(data.getCity_CN());
-				((DefaultViewHolder) holder).name.setOnClickListener(new View.OnClickListener() {
-					  @Override
-					  public void onClick(View v) {
-						    if (mInnerListener != null) {
-								mInnerListener.dismiss(pos, data);
-						    }
+				((DefaultViewHolder) holder).name.setOnClickListener(v -> {
+					  if (mInnerListener != null) {
+						    mInnerListener.dismiss(pos, data);
 					  }
 				});
 		    }

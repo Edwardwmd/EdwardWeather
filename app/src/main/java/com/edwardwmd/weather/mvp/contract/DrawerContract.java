@@ -8,11 +8,6 @@ import com.edwardwmd.weather.base.IPresenter;
 public interface DrawerContract {
 
 
-	  interface Model {
-
-
-	  }
-
 
 	  interface View extends BaseView {
 

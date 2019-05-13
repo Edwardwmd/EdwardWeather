@@ -46,11 +46,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 	  @Override
 	  protected void onResume() {
 		    super.onResume();
-		    ininData();
+		    initData();
 	  }
 
 
-	  protected void ininData() {
+	  protected void initData() {
 
 	  }
 

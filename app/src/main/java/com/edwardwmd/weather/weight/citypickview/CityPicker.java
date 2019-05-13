@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class CityPicker {
-    private static final String TAG = "CityPicker";
+    private static final String TAG = CityPicker.class.getSimpleName();
 
     private WeakReference<FragmentActivity> mContext;
     private WeakReference<Fragment> mFragment;

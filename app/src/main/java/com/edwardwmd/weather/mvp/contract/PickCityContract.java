@@ -14,12 +14,6 @@ import java.util.List;
 public interface PickCityContract {
 
 
-	  interface Model {
-
-
-	  }
-
-
 	  interface View extends BaseView {
 
 
@@ -36,9 +30,10 @@ public interface PickCityContract {
 
 		    List<ChinaCityInfo> AllData();
 
-		    List<ChinaCityInfo>keywordsSearch(String keyword);
+		    List<ChinaCityInfo> keywordsSearch(String keyword);
 
-		    void insertNewHotCitys(List<HotCity>hotCities);
+		    void insertNewHotCitys(List<HotCity> hotCities);
+
 
 	  }
 

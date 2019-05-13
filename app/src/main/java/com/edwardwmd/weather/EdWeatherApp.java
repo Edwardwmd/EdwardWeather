@@ -86,7 +86,6 @@ public class EdWeatherApp extends Application {
 		    if (allActivities != null) {
 				synchronized (allActivities) {
 					  for (Activity act : allActivities) {
-						    Log.e("程序退出-->", "已退出" );
 						    act.finish();
 					  }
 				}

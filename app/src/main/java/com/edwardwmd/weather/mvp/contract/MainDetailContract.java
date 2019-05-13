@@ -13,12 +13,6 @@ import java.util.List;
 public interface MainDetailContract {
 
 
-	  interface Model {
-
-
-	  }
-
-
 	  interface View extends BaseView {
 
 

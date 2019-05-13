@@ -81,11 +81,11 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 					  break;
 
 				case R.id.tv_setting:
-					  getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+					  Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), SettingActivity.class));
 					  getActivity().finish();
 					  break;
 				case R.id.tv_about:
-					  getActivity().startActivity(new Intent(getActivity(), AboutActivity.class));
+					  Objects.requireNonNull(getActivity()).startActivity(new Intent(getActivity(), AboutActivity.class));
 					  getActivity().finish();
 					  break;
 		    }

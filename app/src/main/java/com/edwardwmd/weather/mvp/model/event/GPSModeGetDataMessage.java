@@ -1,4 +1,4 @@
-package com.edwardwmd.weather.mvp.model;
+package com.edwardwmd.weather.mvp.model.event;
 
 
 

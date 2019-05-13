@@ -23,21 +23,12 @@ import com.edwardwmd.weather.base.BaseActivity;
 import com.edwardwmd.weather.weight.MaterialProgressBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.edwardwmd.weather.utils.ConstantUtils.WEBVIEW_KEY;
 
 public class WebActivity extends BaseActivity {
 
 
-	  //	  @BindView(R.id.title)
-//	  TextView mtitle;
-//	  @BindView(R.id.text_beginLoading)
-//	  TextView textBeginLoading;
-//	  @BindView(R.id.text_Loading)
-//	  TextView textLoading;
-//	  @BindView(R.id.text_endLoading)
-//	  TextView textEndLoading;
 	  @BindView(R.id.webView)
 	  WebView webView;
 	  @BindView(R.id.progress)
@@ -80,8 +71,7 @@ public class WebActivity extends BaseActivity {
 				//获取网站标题
 				@Override
 				public void onReceivedTitle(WebView view, String title) {
-//					  System.out.println("标题在这里");
-//					  mtitle.setText(title);
+
 
 				}
 
