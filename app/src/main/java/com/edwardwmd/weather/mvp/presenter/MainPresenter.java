@@ -2,6 +2,7 @@ package com.edwardwmd.weather.mvp.presenter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -14,6 +15,8 @@ import com.edwardwmd.weather.base.BasePresenter;
 import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.TopWeather;
 import com.edwardwmd.weather.mvp.contract.MainContract;
+import com.edwardwmd.weather.utils.ACache;
+import com.edwardwmd.weather.utils.StringUtils;
 import com.edwardwmd.weather.utils.ToastUtils;
 
 import java.util.List;
@@ -24,6 +27,7 @@ import interfaces.heweather.com.interfacesmodule.bean.weather.Weather;
 import interfaces.heweather.com.interfacesmodule.bean.weather.now.NowBase;
 import interfaces.heweather.com.interfacesmodule.view.HeWeather;
 
+import static com.edwardwmd.weather.utils.ConstantUtils.LOCATION_LON_LAT_KEY;
 import static com.edwardwmd.weather.utils.ConstantUtils.NOW_LAT;
 import static com.edwardwmd.weather.utils.ConstantUtils.NOW_LON;
 
@@ -35,23 +39,34 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 	  //声明AMapLocationClient类对象
 	  private AMapLocationClient mLocationClient = null;
 	  private Weather weather;
-	  private Double mLon= NOW_LON;
-	  private Double mLat=NOW_LAT;
+	  private Double mLon = NOW_LON;
+	  private Double mLat = NOW_LAT;
+	  private ACache mACache;
 
 
 	  @Inject
 	  public MainPresenter() {
+		    mACache = ACache.get(EdWeatherApp.getAppContext());
 	  }
 
 
 	  @Override
 	  public void initTopPageWeather() {
-		    if (!isFirstSearch) {
-				initLocation();
+		    String asString = mACache.getAsString(LOCATION_LON_LAT_KEY);
+		    if (asString==null){
 
-		    } else {
-				initWeather(mLon, mLat);
+				if (!isFirstSearch) {
+					  initLocation();
+
+				} else {
+					  initWeather(mLon, mLat);
+				}
+
+		    }else {
+				initWeather(StringUtils.getDoubleBeforeComma(asString),StringUtils.getDoubleAfterComma(asString));
+				Log.e("缓存数据","数据-----》"+ StringUtils.getDoubleBeforeComma(asString)+"        "+StringUtils.getDoubleAfterComma(asString));
 		    }
+
 
 	  }
 
@@ -61,6 +76,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 		    isFirstSearch = true;
 		    mLon = city.getLongitude();
 		    mLat = city.getLatitude();
+		    mACache.put(LOCATION_LON_LAT_KEY, mLon + "," + mLat);
 		    initWeather(mLon, mLat);
 	  }
 
@@ -86,11 +102,13 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
 
 	  private void initWeather(Double lon, Double lat) {
+
 		    if (!isAttachView()) {
 				return;
 		    }
 		    if (lon != null && lat != null) {
 				mView.showLoading();
+
 				HeWeather.getWeather(EdWeatherApp.getAppContext(),
 					  lon + "," + lat, new HeWeather.OnResultWeatherDataListBeansListener() {
 						    @Override

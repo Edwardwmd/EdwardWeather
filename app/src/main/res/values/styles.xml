@@ -79,5 +79,4 @@
         <item name="android:windowExitAnimation">@anim/cp_push_bottom_out</item>
     </style>
 
-
 </resources>

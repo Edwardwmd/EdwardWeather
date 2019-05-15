@@ -17,6 +17,7 @@ import com.edwardwmd.weather.bean.ForecastWeatherBean;
 import com.edwardwmd.weather.bean.LifeIdexBean;
 import com.edwardwmd.weather.bean.WeatherDetailBean;
 import com.edwardwmd.weather.mvp.contract.MainDetailContract;
+import com.edwardwmd.weather.utils.ACache;
 import com.edwardwmd.weather.utils.StringUtils;
 import com.edwardwmd.weather.utils.ToastUtils;
 
@@ -34,6 +35,7 @@ import interfaces.heweather.com.interfacesmodule.bean.weather.now.Now;
 import interfaces.heweather.com.interfacesmodule.bean.weather.now.NowBase;
 import interfaces.heweather.com.interfacesmodule.view.HeWeather;
 
+import static com.edwardwmd.weather.utils.ConstantUtils.LOCATION_LON_LAT_KEY;
 import static com.edwardwmd.weather.utils.ConstantUtils.NOW_LAT;
 import static com.edwardwmd.weather.utils.ConstantUtils.NOW_LON;
 
@@ -49,29 +51,37 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 	  private Double mLon = NOW_LON;
 	  private Double mLat = NOW_LAT;
 	  private boolean isFirstSearch = false;
+	  private final ACache mACache;
 
 
 	  @Inject
 	  public MainDetailPresenter() {
+		    mACache = ACache.get(EdWeatherApp.getAppContext());
 	  }
 
 
 	  @Override
 	  public void initDetailWeather() {
-		    if (!isAttachView()) {
-				return;
+		    String asString = mACache.getAsString(LOCATION_LON_LAT_KEY);
+		    if (asString==null){
+				if (!isFirstSearch) {
+					  initLocation();
+				} else {
+					  initData(mLon, mLat);
+				}
+		    }else {
+				initData(StringUtils.getDoubleBeforeComma(asString),StringUtils.getDoubleAfterComma(asString));
 		    }
-		    if (!isFirstSearch) {
-				initLocation();
-		    } else {
-				initData(mLon, mLat);
-		    }
+
 
 
 	  }
 
 
 	  private void initData(Double lon, Double lat) {
+		    if (!isAttachView()) {
+				return;
+		    }
 		    HeWeather.getWeatherNow(EdWeatherApp.getAppContext(), lon + "," + lat, new HeWeather.OnResultWeatherNowBeanListener() {
 				@Override
 				public void onError(Throwable throwable) {
@@ -141,6 +151,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 		    isFirstSearch = true;
 		    mLat = chinaCityInfo.getLatitude();
 		    mLon = chinaCityInfo.getLongitude();
+
 		    initData(mLon, mLat);
 	  }
 

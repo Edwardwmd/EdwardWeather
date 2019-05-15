@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#00B2EE</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#FF4081</color>
     //LOGO字体颜色
     <color name="splashlogo_text_color">#1C86EE</color>
     //添加城市按钮背景颜色

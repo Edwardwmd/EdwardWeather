@@ -1,7 +1,6 @@
 package com.edwardwmd.weather.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,6 @@ public class SettingAdapter extends BaseRecyclerViewAdapter<SettingAdapter.ViewH
 	  public int getItemCount() {
 		    return settingItemList == null ? 0 : settingItemList.size();
 	  }
-
 
 
 	  static class ViewHolder extends RecyclerView.ViewHolder {

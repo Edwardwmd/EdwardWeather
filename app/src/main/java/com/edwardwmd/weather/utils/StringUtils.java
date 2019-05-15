@@ -2,10 +2,10 @@ package com.edwardwmd.weather.utils;
 
 import android.content.res.Resources;
 
-import com.edwardwmd.weather.EdWeatherApp;
-
 import androidx.annotation.ArrayRes;
 import androidx.annotation.StringRes;
+
+import com.edwardwmd.weather.EdWeatherApp;
 
 public class StringUtils {
 
@@ -259,5 +259,12 @@ public class StringUtils {
 		    return Integer.parseInt(time.substring(time.indexOf(":") + 1));
 	  }
 
+	  public static Double getDoubleBeforeComma(String num) {
+		    return Double.parseDouble(num.substring(0,num.indexOf(",")));
+	  }
+
+	  public static Double getDoubleAfterComma(String num) {
+		    return Double.parseDouble(num.substring(num.indexOf(",") + 1));
+	  }
 
 }

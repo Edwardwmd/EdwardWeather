@@ -35,9 +35,8 @@ public class EdWeatherApp extends Application {
 		    //初始化和风天气
 		    HeConfig.init(APK_USERNAME, APK_KEY);
 		    HeConfig.switchToFreeServerNode();
-		    //初始化数据库
+		    //将Raw中的数据库文件拷贝到Android（"/data/data/com.edwardwmd.weather/databases/"）文件夹下。
 		    DaoManager.getInstance().copyDbFile(instance, DB_NAME);
-
 
 	  }
 
@@ -95,7 +94,10 @@ public class EdWeatherApp extends Application {
 	  }
 
 
-	  //初始化全局appComponent
+	  /**
+	   * 初始化全局appComponent
+	   * @return AppComponent
+	   */
 	  public static AppComponent getAppComponent() {
 		    if (appComponent == null) {
 				appComponent = DaggerAppComponent.builder()

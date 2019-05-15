@@ -40,5 +40,7 @@ public class ConstantUtils {
 	  //个人博客
 	  public final static String PERSONAL_BLOG_URL="https://www.csdn.net/";
 
+	  public final static String LOCATION_LON_LAT_KEY="location_lon_lat_key";
+
 
 }

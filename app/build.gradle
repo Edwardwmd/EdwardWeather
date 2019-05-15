@@ -79,6 +79,7 @@ dependencies {
     //添加数据库
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.github.ForgetAll:LoadingDialog:v1.1.2'
     //添加高德地图定位包
     implementation files('libs/AMap_Location_V4.5.1_20190402.jar')
     //添加和风天气JAR包
