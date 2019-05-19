@@ -26,6 +26,7 @@ import com.edwardwmd.weather.mvp.model.event.GPSModeGetDataMessage;
 import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainDetailPresenter;
+import com.edwardwmd.weather.utils.ACache;
 import com.edwardwmd.weather.utils.LocationUtils;
 import com.edwardwmd.weather.utils.ToastUtils;
 import com.edwardwmd.weather.weight.sunrisesunsetview.SunriseSunsetView;
@@ -42,6 +43,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 
+import static com.edwardwmd.weather.utils.ConstantUtils.LOCATION_LON_LAT_KEY;
 import static com.edwardwmd.weather.utils.ConstantUtils.START_REFRESH;
 
 
@@ -148,7 +150,7 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 	  @Override
 	  protected void initData() {
 		    super.initData();
-		    if (LocationUtils.isLocationEnabled()) {
+		    if (LocationUtils.isLocationEnabled() || ACache.get(getActivity()).getAsString(LOCATION_LON_LAT_KEY) != null) {
 				mPresenter.initDetailWeather();
 		    }
 

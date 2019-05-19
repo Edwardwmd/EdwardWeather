@@ -70,7 +70,7 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
 				.into(imgBgm);
 		    Glide
 				.with(this)
-				.load(R.drawable.ic_github)
+				.load(R.drawable.ic_main_top_refreshbackground)
 				.apply(RequestOptions.bitmapTransform(new CircleCrop()))
 				.into(imgPersonalLogo);
 		    getItemList();
@@ -84,9 +84,9 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
 
 	  private void getItemList() {
 		    settingItems = new ArrayList<>();
-		    settingItems.add(new SettingItem(R.drawable.ic_github, "离线缓存", R.drawable.ic_item_right_t));
-		    settingItems.add(new SettingItem(R.drawable.ic_github, "版本更新", R.drawable.ic_item_right_t));
-		    settingItems.add(new SettingItem(R.drawable.ic_github, "关于", R.drawable.ic_item_right_t));
+		    settingItems.add(new SettingItem(R.drawable.ic_clean, "离线缓存", R.drawable.ic_item_right_t));
+		    settingItems.add(new SettingItem(R.drawable.ic_update, "版本更新", R.drawable.ic_item_right_t));
+		    settingItems.add(new SettingItem(R.drawable.ic_about, "关于", R.drawable.ic_item_right_t));
 	  }
 
 

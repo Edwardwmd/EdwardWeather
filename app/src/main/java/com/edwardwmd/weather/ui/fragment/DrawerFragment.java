@@ -2,13 +2,15 @@ package com.edwardwmd.weather.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.edwardwmd.weather.R;
-import com.edwardwmd.weather.base.BaseFragment;
 import com.edwardwmd.weather.base.BaseMVPFragment;
 import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.mvp.contract.DrawerContract;
@@ -36,6 +38,11 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 	  TextView tvSetting;
 	  @BindView(R.id.tv_about)
 	  TextView tvAbout;
+	  @BindView(R.id.img_weatherdetail)
+	  ImageView imgWeatherdetail;
+	  @BindView(R.id.tv_Temp)
+	  TextView tvTemp;
+
 
 
 	  public static DrawerFragment newInstance() {
@@ -60,6 +67,11 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 	  @Override
 	  protected void initView(View v) {
 		    super.initView(v);
+		    Glide
+				.with(this)
+				.load(R.drawable.ic_main_top_refreshbackground)
+				.apply(RequestOptions.bitmapTransform(new CircleCrop()))
+				.into(imgWeatherdetail);
 
 
 	  }
@@ -77,7 +89,6 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 				case R.id.add_city_btn:
 					  popToSearchCityDialog();
 					  ((MainActivity) Objects.requireNonNull(getActivity())).drawerLayout.closeDrawers();
-
 					  break;
 
 				case R.id.tv_setting:
@@ -105,7 +116,6 @@ public class DrawerFragment extends BaseMVPFragment<DrawerPresenter> implements 
 				.setOnPickListener(new OnPickListener() {
 					  @Override
 					  public void onPick(int position, ChinaCityInfo data) {
-
 						    EventBus.getDefault().post(AddCityMessage.getInstance(data));
 					  }
 

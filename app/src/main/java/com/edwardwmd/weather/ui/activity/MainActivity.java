@@ -21,12 +21,13 @@ import com.edwardwmd.weather.base.BaseMVPActivity;
 import com.edwardwmd.weather.bean.ChinaCityInfo;
 import com.edwardwmd.weather.bean.TopWeather;
 import com.edwardwmd.weather.mvp.contract.MainContract;
-import com.edwardwmd.weather.mvp.model.event.GPSModeGetDataMessage;
 import com.edwardwmd.weather.mvp.model.event.AddCityMessage;
+import com.edwardwmd.weather.mvp.model.event.GPSModeGetDataMessage;
 import com.edwardwmd.weather.mvp.model.event.MainMessage;
 import com.edwardwmd.weather.mvp.presenter.MainPresenter;
 import com.edwardwmd.weather.ui.fragment.DrawerFragment;
 import com.edwardwmd.weather.ui.fragment.MainFragment;
+import com.edwardwmd.weather.utils.ACache;
 import com.edwardwmd.weather.utils.DateUtils;
 import com.edwardwmd.weather.utils.LocationUtils;
 import com.edwardwmd.weather.utils.StringUtils;
@@ -43,6 +44,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
+import static com.edwardwmd.weather.utils.ConstantUtils.LOCATION_LON_LAT_KEY;
 import static com.edwardwmd.weather.utils.ConstantUtils.START_REFRESH;
 
 
@@ -103,13 +105,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 		    //添加Fragment
 		    popToFragment();
 		    //初始化天气数据
+		    initWeatherData();
 
-		    if (LocationUtils.isLocationEnabled()) {
-				mPresenter.initTopPageWeather();
-		    } else {
-				setGPSModeDailog();
-
-		    }
 
 	  }
 
@@ -237,6 +234,21 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 				})
 				.setCancelable(false)
 				.show();
+	  }
+
+
+	  private void initWeatherData() {
+		    String asString = ACache.get(this).getAsString(LOCATION_LON_LAT_KEY);
+		    if (asString == null) {
+				if (LocationUtils.isLocationEnabled()) {
+					  mPresenter.initTopPageWeather();
+				} else {
+					  setGPSModeDailog();
+
+				}
+		    } else {
+				mPresenter.initTopPageWeather();
+		    }
 	  }
 
 
