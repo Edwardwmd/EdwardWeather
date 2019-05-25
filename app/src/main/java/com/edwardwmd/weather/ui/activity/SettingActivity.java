@@ -63,11 +63,13 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
 	  @Override
 	  protected void initView() {
 		    super.initView();
+		    //顶部背景高斯模糊
 		    Glide
 				.with(this)
 				.load(R.drawable.ic_main_top_refreshbackground)
 				.apply(RequestOptions.bitmapTransform(new BlurTransformation(this)))
 				.into(imgBgm);
+		    //用户图标圆形处理
 		    Glide
 				.with(this)
 				.load(R.drawable.ic_main_top_refreshbackground)
@@ -105,17 +107,14 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
 				case 0:
 					  //清除数据
 					  clearDataDailog();
-
 					  break;
 				case 1:
 					  //检查更新APP
 					  updateDialog();
-
 					  break;
 				case 2:
 					  //跳转至关于页面
-					  startActivity(new Intent(this, AboutActivity.class));
-					  finish();
+					  turnTOAboutActivity();
 					  break;
 		    }
 
@@ -128,7 +127,7 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
 	  private void clearDataDailog() {
 		    new AlertDialog
 				.Builder(this)
-				.setIcon(R.drawable.ic_location_logo)
+				.setIcon(R.drawable.ic_clean_logo)
 				.setTitle(R.string.notifyTitle)
 				.setMessage(R.string.clear_data_msg)
 				//取消直接进入城市搜索
@@ -154,6 +153,12 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
 		    handler.postDelayed(() -> ld.loadSuccess(), 4500);
 
 
+	  }
+
+
+	  private void turnTOAboutActivity() {
+		    startActivity(new Intent(this, AboutActivity.class));
+		    finish();
 	  }
 
 

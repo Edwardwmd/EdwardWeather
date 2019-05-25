@@ -18,10 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @Author: Bro0cL
- * @Date: 2018/2/8 10:56
- */
+
 public class SideIndexBar extends View {
     private static final String[] DEFAULT_INDEX_ITEMS = {"热门","A", "B", "C", "D", "E", "F", "G", "H",
             "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"};

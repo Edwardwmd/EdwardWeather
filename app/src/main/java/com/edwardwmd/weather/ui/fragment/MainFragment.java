@@ -229,7 +229,7 @@ public class MainFragment extends BaseMVPFragment<MainDetailPresenter> implement
 	   * @param city
 	   */
 	  @Subscribe(threadMode = ThreadMode.MAIN)
-	  public void onGetSearchCityData(AddCityMessage city) {
+	  public void omGetSearchCityData(AddCityMessage city) {
 		    Log.i("Search City", "Data is: " + city.city.getCity_CN());
 		    mPresenter.addSearchCity(city.city);
 		    clearData();
