@@ -238,8 +238,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
 
 	  private void initWeatherData() {
-		    String asString = ACache.get(this).getAsString(LOCATION_LON_LAT_KEY);
-		    if (asString == null) {
+		    String citylonlat = ACache.get(this).getAsString(LOCATION_LON_LAT_KEY);
+		    if (citylonlat == null) {
 				if (LocationUtils.isLocationEnabled()) {
 					  mPresenter.initTopPageWeather();
 				} else {
@@ -247,7 +247,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
 				}
 		    } else {
-				mPresenter.initTopPageWeather();
+				mPresenter.initSearchCityWeather(citylonlat);
 		    }
 	  }
 

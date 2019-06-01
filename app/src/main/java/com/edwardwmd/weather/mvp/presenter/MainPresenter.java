@@ -18,6 +18,7 @@ import com.edwardwmd.weather.mvp.contract.MainContract;
 import com.edwardwmd.weather.utils.ACache;
 import com.edwardwmd.weather.utils.StringUtils;
 import com.edwardwmd.weather.utils.ToastUtils;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -52,8 +53,6 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 
 	  @Override
 	  public void initTopPageWeather() {
-		    String asString = mACache.getAsString(LOCATION_LON_LAT_KEY);
-		    if (asString==null){
 
 				if (!isFirstSearch) {
 					  initLocation();
@@ -62,16 +61,16 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 					  initWeather(mLon, mLat);
 				}
 
-		    }else {
-				initWeather(StringUtils.getDoubleBeforeComma(asString),StringUtils.getDoubleAfterComma(asString));
-				Log.e("缓存数据","数据-----》"+ StringUtils.getDoubleBeforeComma(asString)+"        "+StringUtils.getDoubleAfterComma(asString));
-		    }
-
-
 	  }
 
+	@Override
+	public void initSearchCityWeather(String CityLonLat) {
+		initWeather(StringUtils.getDoubleBeforeComma(CityLonLat),StringUtils.getDoubleAfterComma(CityLonLat));
+		Log.e("缓存数据","数据-----》"+ StringUtils.getDoubleBeforeComma(CityLonLat)+"        "+StringUtils.getDoubleAfterComma(CityLonLat));
+	}
 
-	  @Override
+
+	@Override
 	  public void addSearchCity(ChinaCityInfo city) {
 		    isFirstSearch = true;
 		    mLon = city.getLongitude();
@@ -86,6 +85,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 		    if (aMapLocation.getErrorCode() == 0) {
 				Double lon = aMapLocation.getLongitude();
 				Double lat = aMapLocation.getLatitude();
+				Log.e("ASDFADSFAESDFADASDF","定位开始啦");
 				initWeather(lon, lat);
 				mLocationClient.onDestroy();
 		    } else {
@@ -124,6 +124,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 								if (list != null && list.size() > 0) {
 									  weather = list.get(0);
 									  addTopWeather(weather);
+									  Log.e("首页顶部数据初始化","获取数据-----》"+new Gson().toJson(weather));
 									  mView.hideLoading();
 								} else {
 									  mView.showErrorMsg("数据未加载，请检查你的网络！>_<");

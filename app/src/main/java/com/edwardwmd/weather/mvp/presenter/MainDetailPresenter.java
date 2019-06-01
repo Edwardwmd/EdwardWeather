@@ -132,7 +132,6 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 								lifeIdexData(lifeIdexBeans, lifestyleBase);
 						    }
 
-
 					  }
 				}
 		    });

@@ -20,6 +20,8 @@ public interface MainContract {
 	  interface Presenter extends IPresenter<View> {
 		    void initTopPageWeather();
 
+		    void initSearchCityWeather(String CityLonLat);
+
 		    void addSearchCity(ChinaCityInfo city);
 
 
