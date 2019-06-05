@@ -44,7 +44,7 @@ public class MainDetailPresenter extends BasePresenter<MainDetailContract.View> 
 
 
 	  //声明AMapLocationClient类对象
-	  public AMapLocationClient mLocationClient = null;
+	  private AMapLocationClient mLocationClient = null;
 	  private List<WeatherDetailBean> detailBeans = new ArrayList<>();
 	  private List<ForecastWeatherBean> forecastWeatherBeans = new ArrayList<>();
 	  private List<LifeIdexBean> lifeIdexBeans = new ArrayList<>();

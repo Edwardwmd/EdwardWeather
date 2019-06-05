@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply greendao plugin
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
         applicationId "com.edwardwmd.weather"
-        minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,7 +25,7 @@ android {
     }
 
     greendao {
-        schemaVersion 1//数据库版本号
+        schemaVersion rootProject.ext.greendaoschema.schemaVersion//数据库版本号
 
     }
 
@@ -37,55 +37,36 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //添加butterknife & dagger & glide APT库
+    annotationProcessor rootProject.ext.annotationProcessorLibs
     //Butterknife控件初始化工具
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation rootProject.ext.butterknife
     //AutoDispose解决RxJava内存泄漏
-    implementation 'com.uber.autodispose:autodispose:0.7.0'
-    implementation 'com.uber.autodispose:autodispose-android:0.7.0'
-    implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
+    implementation rootProject.ext.autodisposeLibs
     //RxJava2&RxAndroid
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation rootProject.ext.rxjavaLibs
     //权限初始化工具
-    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation rootProject.ext.rxpermissions
     //dagger
-    implementation "com.google.dagger:dagger:2.19"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.19"
+    implementation rootProject.ext.dagger
     //网络加载解析
-    implementation 'com.squareup.okhttp3:okhttp:3.14.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation rootProject.ext.okhttp_retrofitLibs
     //下拉刷新
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-4'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-4'
+    implementation rootProject.ext.smartrefreshLibs
     //androidX代替support
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.jakewharton.rxbinding:rxbinding:1.0.1'
-    implementation 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0-alpha06'
-
+    implementation rootProject.ext.androidx_supportLibs
+    //material库
+    implementation rootProject.ext.material
     //图片加载工具glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    //添加数据库
-    implementation 'org.greenrobot:greendao:3.2.2'
-    implementation 'org.greenrobot:eventbus:3.1.1'
-    implementation 'com.github.ForgetAll:LoadingDialog:v1.1.2'
+    implementation rootProject.ext.glide
+    implementation rootProject.ext.greendao
+    implementation rootProject.ext.eventbus
+    //LoadingDialog
+    implementation rootProject.ext.loadingdialog
     //添加高德地图定位包
     implementation files('libs/AMap_Location_V4.5.1_20190402.jar')
     //添加和风天气JAR包
     implementation files('libs/sdk_HeWeather_Public_Android_V2.4.jar')
     //内存泄漏检测库
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-2'
-    //RecycleViewAdapter
-//    implementation project(path: ':library')
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-2'
 }

@@ -1,0 +1,92 @@
+ext {
+    android = [
+            compileSdkVersion: 28,
+            minSdkVersion    : 14,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+
+    greendaoschema = [
+            schemaVersion: 1
+    ]
+
+    dependVersion = [
+            autodisposeSdkVersion    : "0.7.0",
+            butterknifeSdkVersion    : "10.1.0",
+            rxjavaSdkVersion         : "2.2.7",
+            rxandroidSdkVersion      : "2.1.1",
+            okhttpSdkVersion         : "3.14.0",
+            retrofitSdkVersion       : "2.5.0",
+            retrofitConverterScalars : "2.1.0",
+            gsonSdkVersion           : "2.8.5",
+            smartRefreshLayoutVersion: "1.1.0-andx-4",
+            greenDao                 : "3.2.2",
+            eventbus                 : "3.1.1",
+            rxpermissions            : "0.10.2",
+            androidXUnified          : "1.0.0",
+            appcompat                : "1.0.2",
+            constraintlayout         : "1.1.3",
+            dagger                   : "2.19",
+            glide                    : "4.9.0",
+            material                 : "1.1.0-alpha06",
+            loadingdialog:"v1.1.2"
+    ]
+
+    autodispose = [
+            autodispose                     : "com.uber.autodispose:autodispose:$dependVersion.autodisposeSdkVersion",
+            autodisposeAndroid              : "com.uber.autodispose:autodispose-android:$dependVersion.autodisposeSdkVersion",
+            autodisposeAndroidArchcomponents: "com.uber.autodispose:autodispose-android-archcomponents:$dependVersion.autodisposeSdkVersion"
+    ]
+
+    rxjava = [
+            rxjava   : "io.reactivex.rxjava2:rxjava:$dependVersion.rxjavaSdkVersion",
+            rxandroid: "io.reactivex.rxjava2:rxandroid:$dependVersion.rxandroidSdkVersion",
+    ]
+
+    okhttp_retrofit = [
+            okhttp                  : "com.squareup.okhttp3:okhttp:$dependVersion.okhttpSdkVersion",
+            okhttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$dependVersion.okhttpSdkVersion",
+            retrofit                : "com.squareup.retrofit2:retrofit:$dependVersion.retrofitSdkVersion",
+            retrofitAdapterRxjava   : "com.squareup.retrofit2:adapter-rxjava:$dependVersion.retrofitSdkVersion",
+            retrofitConverterScalars: "com.squareup.retrofit2:converter-scalars:$dependVersion.retrofitConverterScalars",
+            gson                    : "com.google.code.gson:gson:$dependVersion.gsonSdkVersion",
+    ]
+
+    androidx_support = [
+            cardview        : "androidx.cardview:cardview:$dependVersion.androidXUnified",
+            recyclerview    : "androidx.recyclerview:recyclerview:$dependVersion.androidXUnified",
+            legacySupportV4 : "androidx.legacy:legacy-support-v4:$dependVersion.androidXUnified",
+            appcompat       : "androidx.appcompat:appcompat:$dependVersion.appcompat",
+            constraintlayout: "androidx.constraintlayout:constraintlayout:$dependVersion.constraintlayout",
+    ]
+
+    smartrefresh = [
+            smartRefreshLayout: "com.scwang.smartrefresh:SmartRefreshLayout:$dependVersion.smartRefreshLayoutVersion",
+            smartRefreshHeader: "com.scwang.smartrefresh:SmartRefreshHeader:$dependVersion.smartRefreshLayoutVersion",
+    ]
+
+    annotationProcessor = [
+            butterknifeCompiler: "com.jakewharton:butterknife-compiler:$dependVersion.butterknifeSdkVersion",
+            daggerCompiler     : "com.google.dagger:dagger-compiler:$dependVersion.dagger",
+            glideCompiler      : "com.github.bumptech.glide:compiler:$dependVersion.glide",
+
+    ]
+
+    butterknife = "com.jakewharton:butterknife:$dependVersion.butterknifeSdkVersion"
+    greendao = "org.greenrobot:greendao:$dependVersion.greenDao"
+    eventbus = "org.greenrobot:eventbus:$dependVersion.eventbus"
+    rxpermissions = "com.github.tbruyelle:rxpermissions:$dependVersion.rxpermissions"
+    dagger = "com.google.dagger:dagger:$dependVersion.dagger"
+    material = "com.google.android.material:material:$dependVersion.material"
+    glide="com.github.bumptech.glide:glide:$dependVersion.glide"
+    loadingdialog="com.github.ForgetAll:LoadingDialog:$dependVersion.loadingdialog"
+
+    annotationProcessorLibs = annotationProcessor.values()
+    autodisposeLibs = autodispose.values()
+    rxjavaLibs = rxjava.values()
+    okhttp_retrofitLibs = okhttp_retrofit.values()
+    androidx_supportLibs = androidx_support.values()
+    smartrefreshLibs = smartrefresh.values()
+
+}
