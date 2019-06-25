@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import interfaces.heweather.com.interfacesmodule.view.HeConfig;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.edwardwmd.weather.utils.ConstantUtils.APK_KEY;
 import static com.edwardwmd.weather.utils.ConstantUtils.APK_USERNAME;
@@ -36,12 +38,14 @@ public class EdWeatherApp extends Application {
 		    HeConfig.init(APK_USERNAME, APK_KEY);
 		    HeConfig.switchToFreeServerNode();
 		    //将Raw中的数据库文件拷贝到Android（"/data/data/com.edwardwmd.weather/databases/"）文件夹下。
+
+
 		    DaoManager.getInstance().copyDbFile(instance, DB_NAME);
 
 	  }
 
 
-	  public static EdWeatherApp getInstance() {
+	public static EdWeatherApp getInstance() {
 		    return instance;
 	  }
 

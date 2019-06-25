@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,6 +29,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,10 +45,12 @@ public class ACache {
 	  private static final int MAX_SIZE = 1000 * 1000 * 50; // 50 mb
 	  private static final int MAX_COUNT = Integer.MAX_VALUE; // 不限制存放数据的数量
 	  private static Map<String, ACache> mInstanceMap = new HashMap<String, ACache>();
-	  private ACacheManager mCache;
+	private static Context context;
+	private ACacheManager mCache;
 
 
 	  public static ACache get(Context ctx) {
+		  context=ctx;
 		    return get(ctx, "ACache");
 	  }
 
@@ -113,7 +117,8 @@ public class ACache {
 		    }
 
 
-		    public void close() throws IOException {
+		    @Override
+			public void close() throws IOException {
 				super.close();
 				mCache.put(file);
 		    }
@@ -605,12 +610,6 @@ public class ACache {
 		    mCache.clear();
 	  }
 
-
-	  /**
-	   * @author 杨福海（michael） www.yangfuhai.com
-	   * @version 1.0
-	   * @title 缓存管理器
-	   */
 	  public class ACacheManager {
 
 
@@ -711,6 +710,7 @@ public class ACache {
 					  }
 				}
 		    }
+
 
 
 		    /**
@@ -936,6 +936,80 @@ public class ACache {
 
 
 	  }
+	/**
+	 * 获取缓存大小
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public  String getTotalCacheSize() {
+		long cacheSize = 0;
+		try {
+			cacheSize = getFolderSize(context.getCacheDir());
+			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+				cacheSize += getFolderSize(context.getExternalCacheDir());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getFormatSize(cacheSize);
+	}
 
 
+	public  long getFolderSize(File file){
+		long size = 0;
+		try {
+			File[] fileList = file.listFiles();
+			for (int i = 0; i < fileList.length; i++) {
+				// 如果下面还有文件
+				if (fileList[i].isDirectory()) {
+					size = size + getFolderSize(fileList[i]);
+				} else {
+					size = size + fileList[i].length();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return size;
+	}
+
+	/**
+	 * 格式化单位
+	 * @param size
+	 * @return
+	 */
+	public  String getFormatSize(double size) {
+		double kiloByte = size / 1024;
+		if (kiloByte < 1) {
+//            return size + "Byte";
+			return "0K";
+		}
+
+		double megaByte = kiloByte / 1024;
+		if (megaByte < 1) {
+			BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
+			return result1.setScale(2, BigDecimal.ROUND_HALF_UP)
+				.toPlainString() + "K";
+		}
+
+		double gigaByte = megaByte / 1024;
+		if (gigaByte < 1) {
+			BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
+			return result2.setScale(2, BigDecimal.ROUND_HALF_UP)
+				.toPlainString() + "M";
+		}
+
+		double teraBytes = gigaByte / 1024;
+		if (teraBytes < 1) {
+			BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
+			return result3.setScale(2, BigDecimal.ROUND_HALF_UP)
+				.toPlainString() + "GB";
+		}
+		BigDecimal result4 = new BigDecimal(teraBytes);
+		return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
+			+ "TB";
+	}
 }
+
+

@@ -67,6 +67,4 @@ dependencies {
     implementation files('libs/AMap_Location_V4.5.1_20190402.jar')
     //添加和风天气JAR包
     implementation files('libs/sdk_HeWeather_Public_Android_V2.4.jar')
-    //内存泄漏检测库
-    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-2'
 }

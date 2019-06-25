@@ -85,7 +85,6 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
 		    if (aMapLocation.getErrorCode() == 0) {
 				Double lon = aMapLocation.getLongitude();
 				Double lat = aMapLocation.getLatitude();
-				Log.e("ASDFADSFAESDFADASDF","定位开始啦");
 				initWeather(lon, lat);
 				mLocationClient.onDestroy();
 		    } else {
