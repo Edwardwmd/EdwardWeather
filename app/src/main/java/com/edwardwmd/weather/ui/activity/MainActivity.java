@@ -250,7 +250,6 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
                         mPresenter.initTopPageWeather();
                   } else {
                         setGPSModeDailog();
-
                   }
             } else {
                   mPresenter.initSearchCityWeather(citylonlat);
@@ -268,7 +267,6 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
                                 EventBus.getDefault().post(AddCityMessage.getInstance(data));
                           }
-
 
                           @Override
                           public void onCancel() {
